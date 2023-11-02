@@ -1,18 +1,16 @@
 #include "headers.h"
 
-int main( int argc, char* args[] )
+int main(int argc, char* args[])
 {
 
 	player P;
+	controls C;
 	dispcontrol DC;
 
-
+	//define win and rend
 	SDL_Window* window = NULL;
 	SDL_Renderer* renderer = NULL;
-	int angle = 0;
 
-	//mouse rotating
-	SDL_SetRelativeMouseMode(SDL_TRUE);
 
 	//Initialize SDL
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
@@ -28,101 +26,36 @@ int main( int argc, char* args[] )
 		//Load textures
 		DC.loadtextures(renderer);
 
-		if( window == NULL )
-		{
+
+		if( window == NULL ) {
 			printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
-		}
-		else
-		{
+		} else {
 
-            //Hack to get window to stay up
-            SDL_Event e;
 			bool quit = false;
-
-			//fps tools
-			unsigned int a = SDL_GetTicks();
-			unsigned int b = SDL_GetTicks();
-			double delta = 0;
-
-
-			const Uint8 *keyboardState = SDL_GetKeyboardState(NULL);
-
+			
 			while( quit == false ) {
+				//exectue if correct fps
+				if (DC.fpsCalc()) {
 
-				//FPS calculation and framerate cap
-				a = SDL_GetTicks();
-				delta = a - b;
-
-				if (delta > 1000/150) {
-					b = a;    
-				
-					while( SDL_PollEvent( &e )) {
-						switch (e.type) {
-							case SDL_QUIT: {
-								quit = true;
-								break;
-							}
-							case SDL_KEYDOWN: {
-								switch (e.key.keysym.sym) {
-									case SDLK_ESCAPE: {
-										quit = true;
-									}
-									case SDLK_SPACE: {
-										std::cout << "warp" << std::endl;
-										SDL_WarpMouseInWindow(window, WIN/2, WIN/2);
-									}
-								}
-							}
-							/*
-							case SDL_MOUSEBUTTONDOWN: {
-								int a,b;
-								SDL_GetMouseState(&a, &b);
-								P.setX(a);
-								P.setY(b);
-								break;
-							}*/
-							default: {
-								break;
-							}
-						}
-					}
-					
-					if(angle >180) {
-						angle-=360;
+					//event handling
+					while( SDL_PollEvent(C.getEvent())) {
+						quit = C.eventSwitch();
 					}
 
-					if(angle<-180) {
-						angle+=360;
-					}
+					//keeping angle in <-180;180>
+					P.checkAngle();
+					P.calcRot(0);
 
-					//std::cout << angle << std::endl;
+					//player movement and rotate, passing player as argument by reference
+					C.kbHandle(&P);
 
-					//movement and rotate
-					if(keyboardState[SDL_SCANCODE_LEFT]) {
-							angle -= 1;
-					}
-					if(keyboardState[SDL_SCANCODE_RIGHT]) {
-							angle += 1;
-					}
-					if(keyboardState[SDL_SCANCODE_W]) {
-						P.setY(P.getY()-1);
-					}
-					if(keyboardState[SDL_SCANCODE_S]) {
-						P.setY(P.getY()+1);
-					}
-					if(keyboardState[SDL_SCANCODE_A]) {
-						P.setX(P.getX()-1);
-					}
-					if(keyboardState[SDL_SCANCODE_D]) {
-						P.setX(P.getX()+1);
-					}
-
-					//update player position
+					//update player position every frame
 					DC.updatePlayerPos(P.getX(), P.getY());
 
-					//display player
+
+					//display player to screen
 					SDL_RenderClear(renderer);
-					SDL_RenderCopyEx(renderer, DC.getImg(0), NULL, DC.getRect(0), angle, NULL, SDL_FLIP_NONE);
+					SDL_RenderCopyEx(renderer, DC.getImg(0), NULL, DC.getRect(0), -P.getAngle(), NULL, SDL_FLIP_NONE);
 					SDL_RenderPresent(renderer);
 				}
 			}

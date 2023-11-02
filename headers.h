@@ -4,8 +4,13 @@
 #include <iostream>
 #include <string>
 #include <time.h>
-#define WIN 600
+#include <cmath>
+
+
+
+#define WIN 900
 
 
 #include "player.h"
+#include "controls.h"
 #include "dispcontrol.h"

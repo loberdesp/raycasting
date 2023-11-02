@@ -272,6 +272,8 @@ CMakeFiles/raycasting.dir/functions.cpp.o: \
  /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
  /usr/include/c++/11/bits/istream.tcc \
  /home/psiembab/Desktop/bmwe36/raycasting/player.h \
+ /home/psiembab/Desktop/bmwe36/raycasting/controls.h \
  /home/psiembab/Desktop/bmwe36/raycasting/dispcontrol.h \
  /home/psiembab/Desktop/bmwe36/raycasting/player.cpp \
+ /home/psiembab/Desktop/bmwe36/raycasting/controls.cpp \
  /home/psiembab/Desktop/bmwe36/raycasting/dispcontrol.cpp
