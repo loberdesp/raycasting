@@ -58,11 +58,11 @@ void player::calcRot(int i) {
 }
 
 float player::getVecX() {
-    return vectorX;
+    return vectorX*WIN/900;
 }
 
 float player::getVecY() {
-    return vectorY;
+    return vectorY*WIN/900;
 }
 
 void player::setVecX(float i) {

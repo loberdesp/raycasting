@@ -270,10 +270,16 @@ CMakeFiles/raycasting.dir/functions.cpp.o: \
  /usr/include/c++/11/bits/locale_facets.tcc \
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
- /usr/include/c++/11/bits/istream.tcc \
+ /usr/include/c++/11/bits/istream.tcc /usr/include/c++/11/vector \
+ /usr/include/c++/11/bits/stl_uninitialized.h \
+ /usr/include/c++/11/bits/stl_vector.h \
+ /usr/include/c++/11/bits/stl_bvector.h \
+ /usr/include/c++/11/bits/vector.tcc \
  /home/psiembab/Desktop/bmwe36/raycasting/player.h \
  /home/psiembab/Desktop/bmwe36/raycasting/controls.h \
+ /home/psiembab/Desktop/bmwe36/raycasting/map.h \
  /home/psiembab/Desktop/bmwe36/raycasting/dispcontrol.h \
  /home/psiembab/Desktop/bmwe36/raycasting/player.cpp \
  /home/psiembab/Desktop/bmwe36/raycasting/controls.cpp \
+ /home/psiembab/Desktop/bmwe36/raycasting/map.cpp \
  /home/psiembab/Desktop/bmwe36/raycasting/dispcontrol.cpp

@@ -5,6 +5,7 @@
 #include <string>
 #include <time.h>
 #include <cmath>
+#include <vector>
 
 
 
@@ -13,4 +14,5 @@
 
 #include "player.h"
 #include "controls.h"
+#include "map.h"
 #include "dispcontrol.h"

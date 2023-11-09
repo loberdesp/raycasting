@@ -11,8 +11,8 @@ void dispcontrol::loadtextures(SDL_Renderer *render) {
     SDL_QueryTexture(images[0], NULL, NULL, &w, &h);
     rects[0].x = (WIN/2)-w/8;
     rects[0].y = (WIN/2)-h/8;
-    rects[0].w = w/4;
-    rects[0].h = h/4;
+    rects[0].w = WIN*2/30;
+    rects[0].h = WIN*2/30;
 }
 
 

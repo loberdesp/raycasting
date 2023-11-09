@@ -5,7 +5,12 @@ int main(int argc, char* args[])
 
 	player P;
 	controls C;
+	map M;
 	dispcontrol DC;
+
+	//tmp wall
+	M.addWall(WIN/9,WIN/3-5,WIN*8/9,WIN/3+5);
+	M.addWall(WIN*5/9,WIN*7/9,WIN*6/9,WIN*8/9);
 
 	//define win and rend
 	SDL_Window* window = NULL;
@@ -25,6 +30,7 @@ int main(int argc, char* args[])
 
 		//Load textures
 		DC.loadtextures(renderer);
+		
 
 
 		if( window == NULL ) {
@@ -34,7 +40,7 @@ int main(int argc, char* args[])
 			bool quit = false;
 			
 			while( quit == false ) {
-				//exectue if correct fps
+				//execute if correct fps
 				if (DC.fpsCalc()) {
 
 					//event handling
@@ -46,15 +52,26 @@ int main(int argc, char* args[])
 					P.checkAngle();
 					P.calcRot(0);
 
-					//player movement and rotate, passing player as argument by reference
+					//player movement, rotation and collision detection passing player and map as argument by reference
 					C.kbHandle(&P);
 
 					//update player position every frame
 					DC.updatePlayerPos(P.getX(), P.getY());
 
 
-					//display player to screen
+					//black background display
+					SDL_SetRenderDrawColor( renderer, 0, 0, 0, 0 );
 					SDL_RenderClear(renderer);
+
+
+
+					//white walls display
+					SDL_SetRenderDrawColor( renderer, 255, 255, 255, 255 );
+					for(int i=0; i < M.getWallcount();i++) {
+						SDL_RenderFillRect( renderer, M.getRect(i));
+					}
+
+					//player display
 					SDL_RenderCopyEx(renderer, DC.getImg(0), NULL, DC.getRect(0), -P.getAngle(), NULL, SDL_FLIP_NONE);
 					SDL_RenderPresent(renderer);
 				}
