@@ -276,6 +276,6 @@ CMakeFiles/raycasting.dir/main.cpp.o: \
  /usr/include/c++/11/bits/stl_bvector.h \
  /usr/include/c++/11/bits/vector.tcc \
  /home/psiembab/Desktop/bmwe36/raycasting/player.h \
- /home/psiembab/Desktop/bmwe36/raycasting/controls.h \
  /home/psiembab/Desktop/bmwe36/raycasting/map.h \
+ /home/psiembab/Desktop/bmwe36/raycasting/controls.h \
  /home/psiembab/Desktop/bmwe36/raycasting/dispcontrol.h

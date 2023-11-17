@@ -339,12 +339,12 @@ CMakeFiles/raycasting.dir/functions.cpp.o: ../functions.cpp \
   /usr/include/c++/11/bits/stl_bvector.h \
   /usr/include/c++/11/bits/vector.tcc \
   ../player.h \
-  ../controls.h \
   ../map.h \
+  ../controls.h \
   ../dispcontrol.h \
   ../player.cpp \
-  ../controls.cpp \
   ../map.cpp \
+  ../controls.cpp \
   ../dispcontrol.cpp
 
 CMakeFiles/raycasting.dir/main.cpp.o: ../main.cpp \
@@ -685,8 +685,8 @@ CMakeFiles/raycasting.dir/main.cpp.o: ../main.cpp \
   /usr/include/c++/11/bits/stl_bvector.h \
   /usr/include/c++/11/bits/vector.tcc \
   ../player.h \
-  ../controls.h \
   ../map.h \
+  ../controls.h \
   ../dispcontrol.h
 
 

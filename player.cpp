@@ -72,3 +72,37 @@ void player::setVecX(float i) {
 void player::setVecY(float i) {
     vectorY=i;
 }
+
+void player::colMove(bool &X, bool &Y) {
+    if(X) {
+	    if(!Y) {
+			y -= vectorY;
+		}
+	}
+	if(Y) {
+		if(!X) {
+            x += vectorX;
+		}
+	}
+	if(!X &&!Y) {
+        y -= vectorY;
+        x += vectorX;
+    }
+}
+
+void player::colMoveBack(bool &X, bool &Y) {
+    if(X) {
+	    if(!Y) {
+			y += vectorY;
+		}
+	}
+	if(Y) {
+		if(!X) {
+            x -= vectorX;
+		}
+	}
+	if(!X &&!Y) {
+        y += vectorY;
+        x -= vectorX;
+    }
+}

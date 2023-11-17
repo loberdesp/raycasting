@@ -9,10 +9,10 @@ void dispcontrol::loadtextures(SDL_Renderer *render) {
     //player txt
     images[0] = IMG_LoadTexture(render, "../assets/player.png");
     SDL_QueryTexture(images[0], NULL, NULL, &w, &h);
-    rects[0].x = (WIN/2)-w/8;
-    rects[0].y = (WIN/2)-h/8;
-    rects[0].w = WIN*2/30;
-    rects[0].h = WIN*2/30;
+    rects[0].x = WIN/2 - PSIZE/2;
+    rects[0].y = WIN/2 - PSIZE/2;
+    rects[0].w = PSIZE;
+    rects[0].h = PSIZE;
 }
 
 
@@ -30,8 +30,8 @@ SDL_Rect* dispcontrol::getRect(int i) {
 }
 
 void dispcontrol::updatePlayerPos(int x, int y) {
-    rects[0].x = x;
-    rects[0].y = y;
+    rects[0].x = x - PSIZE/2;
+    rects[0].y = y - PSIZE/2;
 }
 
 

@@ -7,5 +7,5 @@ class controls {
         controls();
         bool eventSwitch();
         SDL_Event* getEvent();
-        void kbHandle(player* P);
+        void kbHandle(player* P, map* M);
 };

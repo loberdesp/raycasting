@@ -9,8 +9,8 @@ int main(int argc, char* args[])
 	dispcontrol DC;
 
 	//tmp wall
-	M.addWall(WIN/9,WIN/3-5,WIN*8/9,WIN/3+5);
-	M.addWall(WIN*5/9,WIN*7/9,WIN*6/9,WIN*8/9);
+	M.addWall(100,205,900,230);
+	M.addWall(WIN*5/10,WIN*7/10,WIN*6/10,WIN*8/10);
 
 	//define win and rend
 	SDL_Window* window = NULL;
@@ -53,7 +53,10 @@ int main(int argc, char* args[])
 					P.calcRot(0);
 
 					//player movement, rotation and collision detection passing player and map as argument by reference
-					C.kbHandle(&P);
+					C.kbHandle(&P, &M);
+
+					//add wall robi problemy bo tam jest int i jak jest male okno to cos sie psuje, naprawic to porzadnie
+					//std::cout << M.isinWall(P.getX(), P.getY()) << std::endl;
 
 					//update player position every frame
 					DC.updatePlayerPos(P.getX(), P.getY());

@@ -35,7 +35,7 @@ SDL_Event* controls::getEvent() {
     return &e;
 }
 
-void controls::kbHandle(player* P) {
+void controls::kbHandle(player* P, map *M) {
     if(keyboardState[SDL_SCANCODE_LEFT]) {
 		P->addAngle(1);
 	}
@@ -49,21 +49,25 @@ void controls::kbHandle(player* P) {
 
 
 	if(keyboardState[SDL_SCANCODE_W]) {
-		P->setX(P->getX()+P->getVecX());
-		P->setY(P->getY()-P->getVecY());
+		bool X, Y;
+		M->checkCol(P->getX(), P->getY(), P->getVecX(), P->getVecY(), X, Y);
+		P->colMove(X, Y);
 	}
 	if(keyboardState[SDL_SCANCODE_S]) {
-		P->setX(P->getX()-P->getVecX());
-		P->setY(P->getY()+P->getVecY());
+		bool X, Y;
+		M->checkCol(P->getX(), P->getY(), -P->getVecX(), -P->getVecY(), X, Y);
+		P->colMoveBack(X, Y);
 	}
 	if(keyboardState[SDL_SCANCODE_A]) {
 		P->calcRot(90);
-		P->setX(P->getX()+P->getVecX());
-		P->setY(P->getY()-P->getVecY());
+		bool X, Y;
+		M->checkCol(P->getX(), P->getY(), P->getVecX(), P->getVecY(), X, Y);
+		P->colMove(X, Y);
 	}
 	if(keyboardState[SDL_SCANCODE_D]) {
 		P->calcRot(-90);
-		P->setX(P->getX()+P->getVecX());
-		P->setY(P->getY()-P->getVecY());
+		bool X, Y;
+		M->checkCol(P->getX(), P->getY(), P->getVecX(), P->getVecY(), X, Y);
+		P->colMove(X, Y);
 	}
 }
