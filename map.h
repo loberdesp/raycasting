@@ -10,4 +10,5 @@ class map {
         SDL_Rect *getRect(int i);
         bool isinWall(float x, float y);
         void checkCol(float x, float y, float vx, float vy, bool &colX, bool &colY);
+        void getline(float &x, float &y, float vx, float vy);
 };

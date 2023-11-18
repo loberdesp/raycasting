@@ -9,7 +9,10 @@ int main(int argc, char* args[])
 	dispcontrol DC;
 
 	//tmp wall
-	M.addWall(100,205,900,230);
+	M.addWall(0,0,WIN,WIN/25);
+	M.addWall(0,WIN-WIN/25,WIN,WIN);
+	M.addWall(0,WIN/25,WIN/25,WIN-WIN/25);
+	M.addWall(WIN-WIN/25,WIN/25,WIN,WIN-WIN/25);
 	M.addWall(WIN*5/10,WIN*7/10,WIN*6/10,WIN*8/10);
 
 	//define win and rend
@@ -30,7 +33,8 @@ int main(int argc, char* args[])
 
 		//Load textures
 		DC.loadtextures(renderer);
-		
+
+
 
 
 		if( window == NULL ) {
@@ -47,6 +51,18 @@ int main(int argc, char* args[])
 					while( SDL_PollEvent(C.getEvent())) {
 						quit = C.eventSwitch();
 					}
+/*
+					const Uint8 *keyboard = SDL_GetKeyboardState(NULL);
+					if(keyboard[SDL_SCANCODE_LSHIFT]) {
+						SDL_WarpMouseInWindow(window, WIN / 2, WIN / 2);
+					}
+					int p = 0;
+					int o = 0;
+					SDL_GetRelativeMouseState(&p, &o);
+					std::cout << p << " relative " << o << std::endl;
+					SDL_GetGlobalMouseState(&p, &o);
+					std::cout << p << " normal " << o << std::endl;
+*/
 
 					//keeping angle in <-180;180>
 					P.checkAngle();
@@ -67,6 +83,18 @@ int main(int argc, char* args[])
 					SDL_RenderClear(renderer);
 
 
+
+					//lines display
+					SDL_SetRenderDrawColor( renderer, 0, 255, 0, 0 );
+					float a = 0;
+					float b = 0;
+					for(int i=-30;i<=30;i+=5) {
+						a = P.getX();
+						b = P.getY();
+						P.calcRot(i);
+						M.getline(a,b,P.getVecX(),P.getVecY());
+						SDL_RenderDrawLine(renderer, P.getX(), P.getY(), a, b);
+					}
 
 					//white walls display
 					SDL_SetRenderDrawColor( renderer, 255, 255, 255, 255 );

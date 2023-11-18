@@ -43,3 +43,16 @@ void map::checkCol(float x, float y, float vx, float vy, bool &colX, bool &colY)
     colX = isinWall(x + vx, y);
     colY = isinWall(x, y - vy);
 }
+
+
+void map::getline(float &x, float &y, float vx, float vy) {
+    bool touch = true;
+    while(touch) {
+        if(isinWall(x+vx,y-vy)) {
+            touch = false;
+        } else {
+            x += vx;
+            y -= vy;
+        }
+    }
+}

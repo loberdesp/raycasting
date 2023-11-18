@@ -12,7 +12,6 @@
 #define WIN 1000
 #define PSIZE WIN/20
 
-
 #include "player.h"
 #include "map.h"
 #include "controls.h"
