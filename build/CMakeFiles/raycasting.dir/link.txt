@@ -1,1 +1,0 @@
-/usr/bin/g++ -g CMakeFiles/raycasting.dir/main.cpp.o CMakeFiles/raycasting.dir/functions.cpp.o -o raycasting  -lSDL2 -lSDL2_image 

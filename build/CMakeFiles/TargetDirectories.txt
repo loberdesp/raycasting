@@ -1,3 +1,0 @@
-/home/psiembab/Desktop/bmwe36/raycasting/build/CMakeFiles/raycasting.dir
-/home/psiembab/Desktop/bmwe36/raycasting/build/CMakeFiles/edit_cache.dir
-/home/psiembab/Desktop/bmwe36/raycasting/build/CMakeFiles/rebuild_cache.dir
