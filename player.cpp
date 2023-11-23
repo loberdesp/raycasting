@@ -40,9 +40,8 @@ void player::checkAngle() {
     }
 }
 
-void player::calcRot(int i) {
+void player::calcRot(float i) {
     vectorX = 1;
-    
     vectorY = tan((angle+i)*M_PI/180);
     if(abs(vectorX) > abs(vectorY)) {
         vectorX = vectorX/abs(vectorX);

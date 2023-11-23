@@ -82,20 +82,44 @@ int main(int argc, char* args[])
 					SDL_SetRenderDrawColor( renderer, 0, 0, 0, 0 );
 					SDL_RenderClear(renderer);
 
-
-
 					//lines display
 					SDL_SetRenderDrawColor( renderer, 0, 255, 0, 0 );
 					float a = 0;
 					float b = 0;
-					for(int i=-30;i<=30;i+=5) {
+					float wallH = 0;
+					int o = 0;
+					for(int i=500;i>=-500;i--) {
 						a = P.getX();
 						b = P.getY();
-						P.calcRot(i);
+						P.calcRot(float(i)/10);
 						M.getline(a,b,P.getVecX(),P.getVecY());
-						SDL_RenderDrawLine(renderer, P.getX(), P.getY(), a, b);
-					}
+						//SDL_RenderDrawLine(renderer, P.getX(), P.getY(), a, b);
+						//fix reverse fisheye
+						float dist = sqrt(pow(a - P.getX(), 2) + pow(b - P.getY(), 2));
+						dist = dist*cos(float(i)/10*M_PI/180);
 
+
+						if(dist!=0) {
+							wallH = (50*WIN)/dist;
+							if(wallH>WIN) {
+								wallH = WIN;
+							}
+						} else {
+							wallH = WIN;
+						}
+
+						
+						SDL_Rect r;
+						r.x = o;
+						r.y = WIN/2-wallH/2;
+						r.w = 1;
+						r.h = wallH;
+						SDL_RenderFillRect( renderer, &r );
+						o++;
+						
+					}
+					//std::cout << wallH << std::endl;
+					/*
 					//white walls display
 					SDL_SetRenderDrawColor( renderer, 255, 255, 255, 255 );
 					for(int i=0; i < M.getWallcount();i++) {
@@ -104,7 +128,10 @@ int main(int argc, char* args[])
 
 					//player display
 					SDL_RenderCopyEx(renderer, DC.getImg(0), NULL, DC.getRect(0), -P.getAngle(), NULL, SDL_FLIP_NONE);
+					*/
 					SDL_RenderPresent(renderer);
+					
+					
 				}
 			}
 		}

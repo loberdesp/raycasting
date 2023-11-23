@@ -1,5 +1,5 @@
 class player {
-    int angle;
+    float angle;
     float x, y;
     float vectorX, vectorY;
     int sprint;
@@ -14,7 +14,7 @@ class player {
         float getX();
         float getY();
         int getAngle();
-        void calcRot(int i);
+        void calcRot(float i);
         float getVecX();
         float getVecY();
         void setVecX(float i);
