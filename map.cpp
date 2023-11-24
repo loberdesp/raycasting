@@ -14,9 +14,9 @@ void map::addWall(int x1, int y1, int x2, int y2) {
     }
     SDL_Rect tmpWall;
     tmpWall.x = x1;
-    tmpWall.y = y1;
+    tmpWall.y = WIN/2+y1/2;
     tmpWall.w = x2-x1;
-    tmpWall.h = y2-y1;
+    tmpWall.h = (y2-y1)/2;
     wallVec.push_back(tmpWall);
 }
 

@@ -31,7 +31,7 @@ SDL_Rect* dispcontrol::getRect(int i) {
 
 void dispcontrol::updatePlayerPos(int x, int y) {
     rects[0].x = x - PSIZE/2;
-    rects[0].y = y - PSIZE/2;
+    rects[0].y = WIN/2+(y - PSIZE/2)/2;
 }
 
 
