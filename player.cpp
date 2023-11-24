@@ -1,6 +1,6 @@
 player::player() {
-    x = WIN/2;
-    y = WIN/2;
+    x = WINY/2;
+    y = WINY/2;
     angle = 90;
     sprint = 1;
 
@@ -57,11 +57,11 @@ void player::calcRot(float i) {
 }
 
 float player::getVecX() {
-    return vectorX*WIN/900;
+    return vectorX*WINY/1000;
 }
 
 float player::getVecY() {
-    return vectorY*WIN/900;
+    return vectorY*WINY/1000;
 }
 
 void player::setVecX(float i) {

@@ -9,8 +9,11 @@
 
 
 
-#define WIN 1000
-#define PSIZE WIN/20
+#define WINY 512
+#define WINX WINY*2
+#define MAPSIZE 64
+#define TILESIZE WINY/MAPSIZE
+#define PSIZE WINY/16
 
 
 #include "player.h"

@@ -2,22 +2,10 @@ map::map() {
     std::cout << "Created Map!" << std::endl;
 }
 
-void map::addWall(int x1, int y1, int x2, int y2) {
-    for(float i=x1;i<x2;i++) {
-        for(float j=y1;j<y2;j++) {
-            //chodzi o to ze kiedy mamy np win = 200 i potem to pomnozymy to mamy skok co np 5, bo jest mniej iteracji niz trzeba
-            //mozliwe ze trzeba bedzie zrobic druga petle, roznica pomnozonych liczb i bedzie tylko dodawac do vectora mapy
-            if(mapVector[i*1000/WIN][j*1000/WIN]==0) {
-                mapVector[i*1000/WIN][j*1000/WIN]=1;
-            }
-        }
+void map::addWall(int x1, int y1) {
+    if(mapVector[x1][y1] == 0) {
+        mapVector[x1][y1] = 1;
     }
-    SDL_Rect tmpWall;
-    tmpWall.x = x1;
-    tmpWall.y = WIN/2+y1/2;
-    tmpWall.w = x2-x1;
-    tmpWall.h = (y2-y1)/2;
-    wallVec.push_back(tmpWall);
 }
 
 int map::getWallcount() {
@@ -29,8 +17,8 @@ SDL_Rect *map::getRect(int i) {
 }
 
 bool map::isinWall(float x, float y) {
-    int xint = x*1000/WIN;
-    int yint = y*1000/WIN;
+    int xint = x/float(TILESIZE);
+    int yint = y/float(TILESIZE);
     if(mapVector[xint][yint] == 1) {
         return true;
     } else {
@@ -40,8 +28,10 @@ bool map::isinWall(float x, float y) {
 
 
 void map::checkCol(float x, float y, float vx, float vy, bool &colX, bool &colY) {
-    colX = isinWall(x + vx, y);
-    colY = isinWall(x, y - vy);
+    //value should be 20 to have perfect circle collision but when approaching wall with small enough vector you can enter it slowly
+    //
+    colX = isinWall(x + 2*vx, y);
+    colY = isinWall(x, y - 2*vy);
 }
 
 
@@ -54,5 +44,13 @@ void map::getline(float &x, float &y, float vx, float vy) {
             x += vx;
             y -= vy;
         }
+    }
+}
+
+bool map::checkWall(int x, int y) {
+    if(mapVector[x][y] == 1) {
+        return true;
+    } else {
+        return false;
     }
 }
