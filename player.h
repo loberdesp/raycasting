@@ -3,6 +3,7 @@ class player {
     float x, y;
     float vectorX, vectorY;
     int sprint;
+    float pitch;
 
 
     public:
@@ -21,4 +22,6 @@ class player {
         void setVecY(float i);
         void colMove(bool &X, bool &Y);
         void colMoveBack(bool &X, bool &Y);
+        void addPitch(float i);
+        float getPitch();
 };

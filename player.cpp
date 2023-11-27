@@ -3,6 +3,7 @@ player::player() {
     y = WINY/2;
     angle = 90;
     sprint = 1;
+    pitch = 0;
 
     std::cout << "Created Player!" << std::endl;
 }
@@ -104,4 +105,12 @@ void player::colMoveBack(bool &X, bool &Y) {
         y += vectorY;
         x -= vectorX;
     }
+}
+
+void player::addPitch(float i) {
+    pitch += i;
+}
+
+float player::getPitch() {
+    return pitch;
 }

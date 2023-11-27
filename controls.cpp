@@ -42,6 +42,16 @@ void controls::kbHandle(player* P, map *M) {
     if(keyboardState[SDL_SCANCODE_RIGHT]) {
 		P->addAngle(-1);
 	}
+	if(keyboardState[SDL_SCANCODE_UP]) {
+		if(P->getPitch() <= WINY) {
+			P->addPitch(5);
+		}
+	}
+	if(keyboardState[SDL_SCANCODE_DOWN]) {
+		if(P->getPitch() > -WINY) {
+			P->addPitch(-5);
+		}
+	}
 
 
 	if(keyboardState[SDL_SCANCODE_LSHIFT]) {

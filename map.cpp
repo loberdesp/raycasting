@@ -28,10 +28,21 @@ bool map::isinWall(float x, float y) {
 
 
 void map::checkCol(float x, float y, float vx, float vy, bool &colX, bool &colY) {
-    //value should be 20 to have perfect circle collision but when approaching wall with small enough vector you can enter it slowly
-    //
-    colX = isinWall(x + 2*vx, y);
-    colY = isinWall(x, y - 2*vy);
+    if(abs(vx) > abs(vy)) {
+        if(vx*vy>0) {
+            vy = vx;
+        } else {
+            vy = -vx;
+        }
+    } else {
+        if(vx*vy>0) {
+            vx = vy;
+        } else {
+            vx = -vy;
+        }
+    }
+    colX = isinWall(x + 50*vx, y);
+    colY = isinWall(x, y - 50*vy);
 }
 
 

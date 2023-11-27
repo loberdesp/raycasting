@@ -97,15 +97,15 @@ int main(int argc, char* args[])
 						dist = dist*cos(i*M_PI/180);
 						if(dist!=0) {
 							wallH = (MAPSIZE/val*WINY)/dist;
-							if(wallH>WINY) {
-								wallH = WINY;
-							}
+							// if(wallH>WINY) {
+							// 	wallH = WINY;
+							// }
 						} else {
-							wallH = WINY;
+							wallH = 6*WINY;
 						}
 						SDL_Rect r;
 						r.x = WINY+o*TILESIZE;
-						r.y = (WINY/2-wallH/2)/2;
+						r.y = (WINY/2-wallH/2)+P.getPitch();
 						r.w = TILESIZE;
 						r.h = wallH;
 						SDL_SetRenderDrawColor( renderer, 0, 255, 255, 0 );
