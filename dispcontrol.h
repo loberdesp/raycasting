@@ -16,4 +16,5 @@ class dispcontrol {
         SDL_Rect* getRect(int i);
         void updatePlayerPos(int x, int y);
         bool fpsCalc();
+        void updateGun(float a);
 };

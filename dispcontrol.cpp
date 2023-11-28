@@ -4,15 +4,25 @@ dispcontrol::dispcontrol() {
 
 void dispcontrol::loadtextures(SDL_Renderer *render) {
 
-    int w, h; // texture width & height
-
+    int w, h, i; // texture width & height
+    i=0;
     //player txt
-    images[0] = IMG_LoadTexture(render, "../assets/player.png");
+    images[i] = IMG_LoadTexture(render, "../assets/img/player.png");
     SDL_QueryTexture(images[0], NULL, NULL, &w, &h);
-    rects[0].x = WINY/2 - PSIZE/2;
-    rects[0].y = WINY/2 - PSIZE/2;
-    rects[0].w = PSIZE;
-    rects[0].h = PSIZE;
+    rects[i].x = WINY/2 - PSIZE/2;
+    rects[i].y = WINY/2 - PSIZE/2;
+    rects[i].w = PSIZE;
+    rects[i].h = PSIZE;
+
+    i++;
+    images[i] = IMG_LoadTexture(render, "../assets/img/duke.png");
+    SDL_QueryTexture(images[i], NULL, NULL, &w, &h);
+    w*=2;
+    h*=2;
+    rects[i].x = WINX - w*1.25;
+    rects[i].y = WINY - h;
+    rects[i].w = w;
+    rects[i].h = h;
 }
 
 

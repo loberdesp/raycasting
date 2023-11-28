@@ -2,8 +2,9 @@ player::player() {
     x = WINY/2;
     y = WINY/2;
     angle = 90;
-    sprint = 1;
     pitch = 0;
+    handWobble = 0;
+    par = 0;
 
     std::cout << "Created Player!" << std::endl;
 }
@@ -113,4 +114,21 @@ void player::addPitch(float i) {
 
 float player::getPitch() {
     return pitch;
+}
+
+void player::addHandWobble() {
+    if(handWobble >= 0.99) {
+        par = 1;
+    } else if(handWobble <= -0.99) {
+        par = 0;
+    }
+    if(par == 0) {
+        handWobble += 0.01;
+    } else {
+        handWobble -= 0.01;
+    }
+}
+
+float player::getHandWobble() {
+    return handWobble;
 }

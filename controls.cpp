@@ -12,18 +12,26 @@ bool controls::eventSwitch() {
 			switch (e.key.keysym.sym) {
 				case SDLK_ESCAPE: {
 					return true;
+					break;
 				}
 				case SDLK_SPACE: {
 					std::cout << "toggle relative" << std::endl;
 					if(SDL_GetRelativeMouseMode() == SDL_TRUE) {
 						SDL_SetRelativeMouseMode(SDL_FALSE);
+						break;
 					} else {
 						SDL_SetRelativeMouseMode(SDL_TRUE);
+						break;
 					}
 										
 				}
 			}
 		}
+		case SDL_MOUSEBUTTONDOWN: {
+            if(e.button.button == SDL_BUTTON_LEFT) {
+                std::cout << "shoot" << std::endl;
+            }
+        }
 		default: {
 			break;
 		}
@@ -55,6 +63,7 @@ void controls::kbHandle(player* P, map *M) {
 
 
 	if(keyboardState[SDL_SCANCODE_LSHIFT]) {
+		P->addHandWobble();
 	}
 
 

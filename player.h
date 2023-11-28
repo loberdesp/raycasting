@@ -2,8 +2,10 @@ class player {
     float angle;
     float x, y;
     float vectorX, vectorY;
-    int sprint;
     float pitch;
+    float handWobble;
+    bool par;
+    float velocity;
 
 
     public:
@@ -24,4 +26,6 @@ class player {
         void colMoveBack(bool &X, bool &Y);
         void addPitch(float i);
         float getPitch();
+        void addHandWobble();
+        float getHandWobble();
 };

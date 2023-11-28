@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 #include <stdio.h>
 #include <iostream>
 #include <string>
@@ -13,10 +14,11 @@
 #define WINX WINY*2
 #define MAPSIZE 64
 #define TILESIZE WINY/MAPSIZE
-#define PSIZE WINY/16
+#define PSIZE WINY/10
 
 
 #include "player.h"
 #include "map.h"
+#include "soundcontrol.h"
 #include "controls.h"
 #include "dispcontrol.h"
