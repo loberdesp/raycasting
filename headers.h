@@ -1,6 +1,6 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
+#include <SDL.h>
+#include <SDL_image.h>
+//#include <SDL2/SDL_mixer.h>
 #include <stdio.h>
 #include <iostream>
 #include <string>
@@ -15,6 +15,7 @@
 #define MAPSIZE 64
 #define TILESIZE WINY/MAPSIZE
 #define PSIZE WINY/10
+#define SENSITIVITY 0.4
 
 
 #include "player.h"

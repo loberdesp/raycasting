@@ -1,3 +1,4 @@
+/*
 soundcontrol::soundcontrol() {
     SDL_Init(SDL_INIT_AUDIO);
 
@@ -25,3 +26,4 @@ void soundcontrol::playsound(int index) {
 void soundcontrol::loadsounds() {
     addsound("../assets/sounds/s.wav");
 }
+*/

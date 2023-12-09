@@ -1,5 +1,6 @@
 map::map() {
     std::cout << "Created Map!" << std::endl;
+    
 }
 
 void map::addWall(int x1, int y1) {

@@ -1,15 +1,12 @@
 #include "headers.h"
 
-int main(int argc, char* args[])
-{
+int main(int argc, char* args[]) {
 
 	player P;
 	controls C;
 	map M;
 	dispcontrol DC;
-	soundcontrol SC;
-
-	//tmp wall
+	//soundcontrol SC;
 
 
 	for(int i = 0; i < MAPSIZE; i++) {
@@ -45,12 +42,13 @@ int main(int argc, char* args[])
 	else
 	{
 		//Create window and renderer
-		window = SDL_CreateWindow( "KNUR NUKEM 3D", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINX, WINY, SDL_WINDOW_SHOWN );
+		window = SDL_CreateWindow( "RAYCAST", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINX, WINY, SDL_WINDOW_SHOWN );
 		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
 		//Load textures
 		DC.loadtextures(renderer);
-		SC.loadsounds();
+		//SC.loadsounds();
+		
 
 
 
@@ -76,9 +74,10 @@ int main(int argc, char* args[])
 					P.calcRot(0);
 					//do working step sounds and gun movement
 					//SC.playsound(0);
-
+					SDL_SetRelativeMouseMode(SDL_TRUE);
 					//player movement, rotation and collision detection passing player and map as argument by reference
 					C.kbHandle(&P, &M);
+					C.mouseHandle(&P, &M);
 
 					//update player position every frame
 					DC.updatePlayerPos(P.getX(), P.getY());
@@ -90,25 +89,24 @@ int main(int argc, char* args[])
 
 					float a,b,wallH,o = 0;
 					bool hor;
-					int val = MAPSIZE/64;
-					for(int i=MAPSIZE/2;i>=-MAPSIZE/2;i--) {
+					for(int i=MAPSIZE*4;i>=-MAPSIZE*4;i--) {
 						a = P.getX();
 						b = P.getY();
-						P.calcRot(i/val);
+						P.calcRot(float(i)/float(8));
 						M.getline(a,b,P.getVecX(),P.getVecY(), hor);
 						SDL_SetRenderDrawColor( renderer, 255, 255, 0, 0 );
 						SDL_RenderDrawLine(renderer, P.getX(), P.getY(), a, b);
 						float dist = sqrt(pow(a - P.getX(), 2) + pow(b - P.getY(), 2));
-						dist = dist*cos(i*M_PI/180);
+						dist = dist*cos(i*M_PI/(180*8));
 						if(dist!=0) {
-							wallH = (MAPSIZE/val*WINY)/dist;
+							wallH = (MAPSIZE*WINY)/dist;
 						} else {
 							wallH = 6*WINY;
 						}
 						SDL_Rect rwall;
-						rwall.x = WINY+o*TILESIZE;
+						rwall.x = WINY+o*(TILESIZE/8);
 						rwall.y = (WINY/2-wallH/2)+P.getPitch();
-						rwall.w = TILESIZE;
+						rwall.w = TILESIZE/8;
 						rwall.h = wallH;
 						//shades when wall is hit vertically
 						if(hor) {
@@ -121,12 +119,22 @@ int main(int argc, char* args[])
 						
 						//floor
 						SDL_Rect rfloor;
-						rfloor.x = WINY+o*TILESIZE;
+						rfloor.x = WINY+o*TILESIZE/8;
 						rfloor.y = (WINY/2-wallH/2)+P.getPitch()+wallH-1;
-						rfloor.w = TILESIZE;
+						rfloor.w = TILESIZE/8;
 						rfloor.h = WINY-rfloor.y;
 						SDL_SetRenderDrawColor( renderer, 255, 255, 255, 255 );
 						SDL_RenderFillRect( renderer, &rfloor );
+						
+/*
+						//ceiling
+						SDL_Rect rceiling;
+						rceiling.x = WINY+o*TILESIZE/8;
+						rceiling.y = -1;
+						rceiling.w = TILESIZE/8;
+						rceiling.h = (WINY/2-wallH/2)+P.getPitch()+1;
+						SDL_SetRenderDrawColor( renderer, 0, 0, 0, 0 );
+						SDL_RenderFillRect( renderer, &rceiling );*/
 						o++;
 					}
 					
@@ -144,8 +152,8 @@ int main(int argc, char* args[])
 						
 						for(int j=0; j < MAPSIZE;j++) {
 							if(M.checkWall(i,j)==1) {
-								r.x = j*TILESIZE;
-								r.y = i*TILESIZE;
+								r.x = i*TILESIZE;
+								r.y = j*TILESIZE;
 								SDL_SetRenderDrawColor( renderer, 0, 255, 0, 0 );
 								SDL_RenderFillRect( renderer, &r );
 							}

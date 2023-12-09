@@ -15,15 +15,7 @@ bool controls::eventSwitch() {
 					break;
 				}
 				case SDLK_SPACE: {
-					std::cout << "toggle relative" << std::endl;
-					if(SDL_GetRelativeMouseMode() == SDL_TRUE) {
-						SDL_SetRelativeMouseMode(SDL_FALSE);
-						break;
-					} else {
-						SDL_SetRelativeMouseMode(SDL_TRUE);
-						break;
-					}
-										
+					std::cout << "jump" << std::endl;
 				}
 			}
 		}
@@ -63,7 +55,10 @@ void controls::kbHandle(player* P, map *M) {
 
 
 	if(keyboardState[SDL_SCANCODE_LSHIFT]) {
-		P->addHandWobble();
+		std::cout << "sprint" << std::endl;
+	}
+	if(keyboardState[SDL_SCANCODE_LCTRL]) {
+		std::cout << "crouch" << std::endl;
 	}
 
 
@@ -89,4 +84,29 @@ void controls::kbHandle(player* P, map *M) {
 		M->checkCol(P->getX(), P->getY(), P->getVecX(), P->getVecY(), X, Y);
 		P->colMove(X, Y);
 	}
+}
+
+void controls::mouseHandle(player* P, map *M) {
+	int k,u;
+	SDL_GetRelativeMouseState(&u,&k);
+	// if(P->getPitch() > -WINY && P->getPitch() <= WINY) {
+	// 	P->addPitch(float(-k)*SENSITIVITY);
+	// }
+	if(P->getPitch() > -WINY) {
+		P->addPitch(float(-k)*SENSITIVITY/2);
+	} else {
+		P->addPitch(-WINY-P->getPitch());
+		if(-k<0) {
+			P->addPitch(float(-k)*SENSITIVITY/2);
+		}
+	}
+	if(P->getPitch() <= WINY) {
+		P->addPitch(float(-k)*SENSITIVITY/2);
+	} else {
+		P->addPitch(WINY-P->getPitch());
+		if(-k>0) {
+			P->addPitch(float(-k)*SENSITIVITY/2);
+		}
+	}
+	P->addAngle(float(-u)*180/(3*WINY)*SENSITIVITY);
 }

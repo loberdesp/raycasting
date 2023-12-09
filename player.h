@@ -12,7 +12,7 @@ class player {
         player();
         void setX(float i);
         void setY(float i);
-        void addAngle(int i);
+        void addAngle(float i);
         void checkAngle();
         float getX();
         float getY();

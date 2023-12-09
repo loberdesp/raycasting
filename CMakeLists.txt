@@ -1,20 +1,30 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.24)
+project(raycasting)
 
-project (raycasting)
+include(FetchContent)
+Set(FETCHCONTENT_QUIET FALSE)
 
-set(CMAKE_CXX_STANDARD 14)
+FetchContent_Declare(
+        SDL2
+        GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
+        GIT_TAG release-2.26.3
+        GIT_SHALLOW TRUE
+        GIT_PROGRESS TRUE
+)
+FetchContent_MakeAvailable(SDL2)
 
-add_compile_options(-Wall -Wextra -pedantic -Werror=return-type -Werror=parentheses -Werror=vla -Werror=array-bounds -Wcast-qual -Wmaybe-uninitialized )
+FetchContent_Declare(
+        SDL2_image
+        GIT_REPOSITORY https://github.com/libsdl-org/SDL_image.git
+        GIT_TAG release-2.6.3
+        GIT_SHALLOW TRUE
+        GIT_PROGRESS TRUE
+)
 
+set(SDL2IMAGE_INSTALL OFF)
+set(BUILD_SHARED_LIBS FALSE)
 
-find_library(SDL2 NAMES "SDL2")
-find_library(SDL2_image NAMES "SDL2_image")
-find_library(SDL2_mixer NAMES "SDL2_mixer")
+FetchContent_MakeAvailable(SDL2_image)
 
-
-
-set(SOURCE_FILES main.cpp functions.cpp)
-
-
-add_executable(raycasting ${SOURCE_FILES})
-target_link_libraries(raycasting SDL2 SDL2_image SDL2_mixer)
+add_executable(raycasting main.cpp functions.cpp)
+target_link_libraries(raycasting SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static)

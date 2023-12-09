@@ -1,3 +1,4 @@
+/*
 class soundcontrol {
     std::vector<Mix_Chunk *> sounds;
     std::vector<float> volumes;
@@ -8,3 +9,4 @@ class soundcontrol {
         void playsound(int index);
         void loadsounds();
 };
+*/

@@ -17,7 +17,7 @@ void player::setY(float i) {
     y = i;
 }
 
-void player::addAngle(int i) {
+void player::addAngle(float i) {
     angle += i;
 }
 
