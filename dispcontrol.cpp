@@ -7,7 +7,7 @@ void dispcontrol::loadtextures(SDL_Renderer *render) {
     int w, h, i; // texture width & height
     i=0;
     //player txt
-    images[i] = IMG_LoadTexture(render, "../assets/img/player.png");
+    images[i] = IMG_LoadTexture(render, "assets/img/player.png");
     SDL_QueryTexture(images[0], NULL, NULL, &w, &h);
     rects[i].x = WINY/2 - PSIZE/2;
     rects[i].y = WINY/2 - PSIZE/2;
@@ -15,7 +15,7 @@ void dispcontrol::loadtextures(SDL_Renderer *render) {
     rects[i].h = PSIZE;
 
     i++;
-    images[i] = IMG_LoadTexture(render, "../assets/img/duke.png");
+    images[i] = IMG_LoadTexture(render, "assets/img/duke.png");
     SDL_QueryTexture(images[i], NULL, NULL, &w, &h);
     w*=2;
     h*=2;
@@ -25,7 +25,7 @@ void dispcontrol::loadtextures(SDL_Renderer *render) {
     rects[i].h = h;
 
     i++;
-    images[i] = IMG_LoadTexture(render, "../assets/img/wallbright.jpg");
+    images[i] = IMG_LoadTexture(render, "assets/img/wallbright.jpg");
     SDL_QueryTexture(images[i], NULL, NULL, &w, &h);
     rects[i].x = 0;
     rects[i].y = 0;
@@ -33,7 +33,7 @@ void dispcontrol::loadtextures(SDL_Renderer *render) {
     rects[i].h = h;
 
     i++;
-    images[i] = IMG_LoadTexture(render, "../assets/img/wallshade.png");
+    images[i] = IMG_LoadTexture(render, "assets/img/wallshade.png");
     SDL_QueryTexture(images[i], NULL, NULL, &w, &h);
     rects[i].x = 0;
     rects[i].y = 0;
