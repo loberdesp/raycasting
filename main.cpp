@@ -108,14 +108,18 @@ int main(int argc, char* args[]) {
 						rwall.y = (WINY/2-wallH/2)+P.getPitch();
 						rwall.w = TILESIZE/8;
 						rwall.h = wallH;
+
 						//shades when wall is hit vertically
 						if(hor) {
-							SDL_SetRenderDrawColor( renderer, 0, 255, 255, 0 );
+							float diff = (a*MAPSIZE/8)/WINY - int((a*MAPSIZE/8)/WINY);
+							DC.setRectX(2, diff*2074);
+							SDL_RenderCopyEx(renderer, DC.getImg(2), DC.getRect(2), &rwall, 0, NULL, SDL_FLIP_NONE);
 						} else {
-							SDL_SetRenderDrawColor( renderer, 0, 180, 180, 0 );
+							float diff = (b*MAPSIZE/8)/WINY - int((b*MAPSIZE/8)/WINY);
+							DC.setRectX(3, diff*2074);
+							SDL_RenderCopyEx(renderer, DC.getImg(3), DC.getRect(3), &rwall, 0, NULL, SDL_FLIP_NONE);
 						}
 						
-						SDL_RenderFillRect( renderer, &rwall );
 						
 						//floor
 						SDL_Rect rfloor;
@@ -126,7 +130,7 @@ int main(int argc, char* args[]) {
 						SDL_SetRenderDrawColor( renderer, 255, 255, 255, 255 );
 						SDL_RenderFillRect( renderer, &rfloor );
 						
-/*
+
 						//ceiling
 						SDL_Rect rceiling;
 						rceiling.x = WINY+o*TILESIZE/8;
@@ -134,7 +138,7 @@ int main(int argc, char* args[]) {
 						rceiling.w = TILESIZE/8;
 						rceiling.h = (WINY/2-wallH/2)+P.getPitch()+1;
 						SDL_SetRenderDrawColor( renderer, 0, 0, 0, 0 );
-						SDL_RenderFillRect( renderer, &rceiling );*/
+						SDL_RenderFillRect( renderer, &rceiling );
 						o++;
 					}
 					

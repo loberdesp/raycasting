@@ -23,6 +23,22 @@ void dispcontrol::loadtextures(SDL_Renderer *render) {
     rects[i].y = WINY - h;
     rects[i].w = w;
     rects[i].h = h;
+
+    i++;
+    images[i] = IMG_LoadTexture(render, "../assets/img/wallbright.jpg");
+    SDL_QueryTexture(images[i], NULL, NULL, &w, &h);
+    rects[i].x = 0;
+    rects[i].y = 0;
+    rects[i].w = TILESIZE/8;
+    rects[i].h = h;
+
+    i++;
+    images[i] = IMG_LoadTexture(render, "../assets/img/wallshade.png");
+    SDL_QueryTexture(images[i], NULL, NULL, &w, &h);
+    rects[i].x = 0;
+    rects[i].y = 0;
+    rects[i].w = TILESIZE/8;
+    rects[i].h = h;
 }
 
 
@@ -55,4 +71,9 @@ bool dispcontrol::fpsCalc() {
     } else {
         return false;
     }
+}
+
+
+void dispcontrol::setRectX(int i, int x) {
+    rects[i].x = x;
 }
