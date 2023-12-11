@@ -17,5 +17,5 @@ class dispcontrol {
         void updatePlayerPos(int x, int y);
         bool fpsCalc();
         void updateGun(float a);
-        void setRectX(int i, int x);
+        void setRect(int i, int x, int ratio);
 };

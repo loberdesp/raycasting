@@ -5,11 +5,13 @@ class map {
     
     public:
         map();
+        void initMap();
         void addWall(int x1, int y1);
         int getWallcount();
         SDL_Rect *getRect(int i);
         bool isinWall(float x, float y);
         void checkCol(float x, float y, float vx, float vy, bool &colX, bool &colY);
         void getline(float &x, float &y, float vx, float vy, bool &horizontal);
-        bool checkWall(int x, int y);
+        int checkBlock(int x, int y);
+        SDL_Rect rayWall(int h, float pitch, int k, int ratio);
 };
