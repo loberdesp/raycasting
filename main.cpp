@@ -80,26 +80,36 @@ int main(int argc, char *args[])
 						b = P.getY();
 						P.calcRot(float(i) / 8);
 						std::vector<std::vector<float>> hitVec;
-
+						std::vector<float> tmp(5, 99);
+						hitVec.push_back(tmp);
 
 						// jeśli ściana%10 != 0 to wtedy promień przechodzi dalej, w funkcji odpala się kolejna iteracja aż nie trafi na ściana%10==0
 
-						// while(M.getline(a, b, P.getVecX(), P.getVecY(), hor)) {
+						// while(M.getline(a, b, P.getVecX(), P.getVecY(), hor, hitVec)) {
 						// 	G.update(renderer, &P, &M, &DC, a, b, i, wallH, o, hor);
 						// }
 
-						M.getline(a, b, P.getVecX(), P.getVecY(), hor, hitVec);
-						G.update(renderer, &P, &M, &DC, a, b, i, wallH, o, hor);
-						
+						if (M.getline(a, b, P.getVecX(), P.getVecY(), hor, hitVec)) {
 
-						// floor
-						SDL_Rect rfloor;
-						rfloor.x = WINY + o * TILESIZE / 8;
-						rfloor.y = (WINY / 2 + wallH / 2) + P.getPitch() - 1;
-						rfloor.w = TILESIZE / 8;
-						rfloor.h = WINY - rfloor.y;
-						SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-						SDL_RenderFillRect(renderer, &rfloor);
+							G.update(renderer, &P, &M, &DC, hitVec.back()[0], hitVec.back()[1], i, wallH, o, hitVec.back()[2]);
+							hitVec.pop_back();
+
+							G.drawFloor(renderer, &P, wallH, o);
+
+							if (hitVec.size() != 1)
+							{
+								while (hitVec.size() > 1)
+								{
+									G.update(renderer, &P, &M, &DC, hitVec.back()[0], hitVec.back()[1], i, wallH, o, hitVec.back()[2]);
+									hitVec.pop_back();
+								}
+							}
+						}
+						else
+						{
+							G.update(renderer, &P, &M, &DC, a, b, i, wallH, o, hor);
+							G.drawFloor(renderer, &P, wallH, o);
+						}
 
 						// ceiling
 						SDL_Rect rceiling;
@@ -132,7 +142,12 @@ int main(int argc, char *args[])
 							{
 								r.x = i * TILESIZE;
 								r.y = j * TILESIZE;
-								SDL_SetRenderDrawColor(renderer, 0, 255, 0, 0);
+
+								if(M.checkBlock(i, j) % 10 == 0) {
+									SDL_SetRenderDrawColor(renderer, 0, 255, 0, 0);
+								} else {
+									SDL_SetRenderDrawColor(renderer, 255, 0, 0, 0);
+								}
 								SDL_RenderFillRect(renderer, &r);
 							}
 						}

@@ -22,3 +22,13 @@ void game::update(SDL_Renderer* renderer, player* P, map* M, dispcontrol* DC, fl
 		SDL_RenderCopyEx(renderer, DC->getImg(3), DC->getRect(3), &tmpRect, 0, NULL, SDL_FLIP_NONE);
 	}
 }
+
+void game::drawFloor(SDL_Renderer* renderer, player* P, float wallH, int o) {
+	SDL_Rect rfloor;
+	rfloor.x = WINY + o * TILESIZE / 8;
+	rfloor.y = (WINY / 2 + wallH / 2) + P->getPitch() - 1;
+	rfloor.w = TILESIZE / 8;
+	rfloor.h = WINY - rfloor.y;
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	SDL_RenderFillRect(renderer, &rfloor);
+}
