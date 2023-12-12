@@ -11,7 +11,7 @@ class map {
         SDL_Rect *getRect(int i);
         bool isinWall(float x, float y);
         void checkCol(float x, float y, float vx, float vy, bool &colX, bool &colY);
-        void getline(float &x, float &y, float vx, float vy, bool &horizontal);
+        bool getline(float &x, float &y, float vx, float vy, float &horizontal, std::vector<std::vector<float>>& vec);
         int checkBlock(int x, int y);
         SDL_Rect rayWall(int h, float pitch, int k, int ratio);
 };

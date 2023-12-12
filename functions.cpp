@@ -5,3 +5,4 @@
 #include "soundcontrol.cpp"
 #include "controls.cpp"
 #include "dispcontrol.cpp"
+#include "game.cpp"

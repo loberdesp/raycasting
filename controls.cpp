@@ -110,3 +110,4 @@ void controls::mouseHandle(player* P, map *M) {
 	}
 	P->addAngle(float(-u)*180/(3*WINY)*SENSITIVITY);
 }
+

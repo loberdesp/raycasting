@@ -23,3 +23,4 @@
 #include "soundcontrol.h"
 #include "controls.h"
 #include "dispcontrol.h"
+#include "game.h"
