@@ -1,6 +1,6 @@
 class player {
     float angle;
-    float x, y;
+    float x, y, z;
     float vectorX, vectorY;
     float pitch;
     float handWobble;
@@ -28,4 +28,5 @@ class player {
         float getPitch();
         void addHandWobble();
         float getHandWobble();
+        void updateGravity();
 };

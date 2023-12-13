@@ -1,6 +1,7 @@
 player::player() {
     x = WINY/2;
     y = WINY/2;
+    z = 0;
     angle = 90;
     pitch = 0;
     handWobble = 0;
@@ -131,4 +132,8 @@ void player::addHandWobble() {
 
 float player::getHandWobble() {
     return handWobble;
+}
+
+void player::updateGravity() {
+    
 }
