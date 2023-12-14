@@ -10,7 +10,7 @@ int main(int argc, char *args[])
 	game G;
 	// soundcontrol SC;
 
-	//tmp hand wobble
+	// tmp hand wobble
 	float tmp = 0;
 
 	// define win and rend
@@ -67,7 +67,6 @@ int main(int argc, char *args[])
 					// player movement, rotation and collision detection passing player and map as argument by reference
 					bool move = C.kbHandle(&P, &M);
 
-
 					C.mouseHandle(&P, &M);
 
 					// update player position every frame
@@ -88,7 +87,8 @@ int main(int argc, char *args[])
 						std::vector<float> tmp(5, 99);
 						hitVec.push_back(tmp);
 
-						if (M.getline(a, b, P.getVecX(), P.getVecY(), hor, hitVec)) {
+						if (M.getline(a, b, P.getVecX(), P.getVecY(), hor, hitVec))
+						{
 
 							G.update(renderer, &P, &M, &DC, hitVec.back()[0], hitVec.back()[1], i, wallH, o, hitVec.back()[2]);
 							hitVec.pop_back();
@@ -142,9 +142,12 @@ int main(int argc, char *args[])
 								r.x = i * TILESIZE;
 								r.y = j * TILESIZE;
 
-								if(M.checkBlock(i, j) % 10 == 0) {
+								if (M.checkBlock(i, j) % 10 == 0)
+								{
 									SDL_SetRenderDrawColor(renderer, 0, 255, 0, 0);
-								} else {
+								}
+								else
+								{
 									SDL_SetRenderDrawColor(renderer, 255, 0, 0, 0);
 								}
 								SDL_RenderFillRect(renderer, &r);
@@ -153,24 +156,35 @@ int main(int argc, char *args[])
 					}
 					// player display
 
-					//tmp hand wobble
-					if(tmp > 1) {
+					// tmp hand wobble
+					if (tmp > 1)
+					{
 						tmp = -1;
 					}
-					if(move) {
+					if (move)
+					{
 						tmp += 0.015;
 					}
-					float handX = 30*cos(M_PI*tmp);
-					float handY = 50*sin(-abs(tmp)*M_PI)/2;
+					float handX = 30 * cos(M_PI * tmp);
+					float handY = 50 * sin(-abs(tmp) * M_PI) / 2;
 
 					SDL_Rect tmpHand;
 					DC.handwobblesetrect(tmpHand);
 					tmpHand.x += handX;
 					tmpHand.y -= handY;
 
-
+					// player display
 					SDL_RenderCopyEx(renderer, DC.getImg(0), NULL, DC.getRect(0), -P.getAngle(), NULL, SDL_FLIP_NONE);
+
+					// gun display
 					SDL_RenderCopyEx(renderer, DC.getImg(1), NULL, &tmpHand, 0, NULL, SDL_FLIP_NONE);
+
+
+					//crosshair display
+					SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
+					SDL_RenderDrawLine(renderer, 3 * WINY / 2 - 5, WINY / 2 - 5, 3 * WINY / 2 + 5, WINY / 2 + 5);
+					SDL_RenderDrawLine(renderer, 3 * WINY / 2 - 5, WINY / 2 + 5, 3 * WINY / 2 + 5, WINY / 2 - 5);
+
 					SDL_RenderPresent(renderer);
 				}
 			}
