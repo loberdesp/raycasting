@@ -22,7 +22,7 @@ void dispcontrol::loadtextures(SDL_Renderer *render)
     w *= 2;
     h *= 2;
     rects[i].x = WINX - w * 1.25;
-    rects[i].y = WINY - h;
+    rects[i].y = WINY - h + 1;
     rects[i].w = w;
     rects[i].h = h;
 
@@ -83,4 +83,11 @@ void dispcontrol::setRect(int i, int x, int ratio)
     if (ratio != 0) {
         rects[i].y = rects[i].h - rects[i].h*ratio/10;
     }
+}
+
+void dispcontrol::handwobblesetrect(SDL_Rect& rect) {
+    rect.x = rects[1].x;
+    rect.y = rects[1].y;
+    rect.w = rects[1].w;
+    rect.h = rects[1].h;
 }

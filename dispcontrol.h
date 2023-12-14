@@ -18,4 +18,5 @@ class dispcontrol {
         bool fpsCalc();
         void updateGun(float a);
         void setRect(int i, int x, int ratio);
+        void handwobblesetrect(SDL_Rect& rect);
 };

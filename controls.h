@@ -7,6 +7,6 @@ class controls {
         controls();
         bool eventSwitch();
         SDL_Event* getEvent();
-        void kbHandle(player* P, map* M);
+        bool kbHandle(player* P, map* M);
         void mouseHandle(player* P, map* M);
 };

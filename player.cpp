@@ -75,38 +75,48 @@ void player::setVecY(float i) {
     vectorY=i;
 }
 
-void player::colMove(bool &X, bool &Y) {
+bool player::colMove(bool &X, bool &Y) {
+    bool move = false;
     if(X) {
 	    if(!Y) {
 			y -= vectorY;
+            move = true;
 		}
 	}
 	if(Y) {
 		if(!X) {
             x += vectorX;
+            move = true;
 		}
 	}
 	if(!X &&!Y) {
         y -= vectorY;
         x += vectorX;
+        move = true;
     }
+    return move;
 }
 
-void player::colMoveBack(bool &X, bool &Y) {
+bool player::colMoveBack(bool &X, bool &Y) {
+    bool move = false;
     if(X) {
 	    if(!Y) {
 			y += vectorY;
+            move = true;
 		}
 	}
 	if(Y) {
 		if(!X) {
             x -= vectorX;
+            move = true;
 		}
 	}
 	if(!X &&!Y) {
         y += vectorY;
         x -= vectorX;
+        move = true;
     }
+    return move;
 }
 
 void player::addPitch(float i) {

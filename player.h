@@ -22,8 +22,8 @@ class player {
         float getVecY();
         void setVecX(float i);
         void setVecY(float i);
-        void colMove(bool &X, bool &Y);
-        void colMoveBack(bool &X, bool &Y);
+        bool colMove(bool &X, bool &Y);
+        bool colMoveBack(bool &X, bool &Y);
         void addPitch(float i);
         float getPitch();
         void addHandWobble();
