@@ -27,6 +27,11 @@ void dispcontrol::loadtextures(SDL_Renderer *render)
     rects[i].y = WINY - h + 1;
     rects[i].w = w;
     rects[i].h = h;
+
+    gunPos.x = WINX - w * 1.25;
+    gunPos.y = WINY - h + 1;
+    gunPos.w = w;
+    gunPos.h = h;
     i++;
 
 
@@ -96,9 +101,10 @@ void dispcontrol::setRect(int i, int x, int ratio)
     }
 }
 
-void dispcontrol::handwobblesetrect(SDL_Rect& rect) {
-    rect.x = rects[1].x;
-    rect.y = rects[1].y;
-    rect.w = rects[1].w;
-    rect.h = rects[1].h;
+SDL_Rect* dispcontrol::setGunPos(int x, int y) {
+    gunPos.x = rects[1].x + x;
+    gunPos.y = rects[1].y - y;
+    gunPos.w = rects[1].w;
+    gunPos.h = rects[1].h;
+    return &gunPos;
 }

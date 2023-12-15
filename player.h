@@ -3,9 +3,11 @@ class player {
     float x, y, z;
     float vectorX, vectorY;
     float pitch;
-    float handWobble;
+    float wobble;
     bool par;
     float velocity;
+    float prevX, prevY;
+    float handMoveRatio;
 
 
     public:
@@ -22,11 +24,14 @@ class player {
         float getVecY();
         void setVecX(float i);
         void setVecY(float i);
-        bool colMove(bool &X, bool &Y);
-        bool colMoveBack(bool &X, bool &Y);
+        void colMove(bool &X, bool &Y);
+        void colMoveBack(bool &X, bool &Y);
         void addPitch(float i);
         float getPitch();
-        void addHandWobble();
-        float getHandWobble();
         void updateGravity();
+        void updatePrevPos();
+        bool checkMove(float& rat);
+        void updateWobble();
+        float getHandMoveX();
+        float getHandMoveY();
 };

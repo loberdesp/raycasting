@@ -4,8 +4,9 @@ player::player() {
     z = 0;
     angle = 90;
     pitch = 0;
-    handWobble = 0;
+    wobble = 0.5;
     par = 0;
+    handMoveRatio = 0;
 
     std::cout << "Created Player!" << std::endl;
 }
@@ -75,48 +76,38 @@ void player::setVecY(float i) {
     vectorY=i;
 }
 
-bool player::colMove(bool &X, bool &Y) {
-    bool move = false;
+void player::colMove(bool &X, bool &Y) {
     if(X) {
 	    if(!Y) {
 			y -= vectorY;
-            move = true;
 		}
 	}
 	if(Y) {
 		if(!X) {
             x += vectorX;
-            move = true;
 		}
 	}
 	if(!X &&!Y) {
         y -= vectorY;
         x += vectorX;
-        move = true;
     }
-    return move;
 }
 
-bool player::colMoveBack(bool &X, bool &Y) {
-    bool move = false;
+void player::colMoveBack(bool &X, bool &Y) {
     if(X) {
 	    if(!Y) {
 			y += vectorY;
-            move = true;
 		}
 	}
 	if(Y) {
 		if(!X) {
             x -= vectorX;
-            move = true;
 		}
 	}
 	if(!X &&!Y) {
         y += vectorY;
         x -= vectorX;
-        move = true;
     }
-    return move;
 }
 
 void player::addPitch(float i) {
@@ -127,23 +118,50 @@ float player::getPitch() {
     return pitch;
 }
 
-void player::addHandWobble() {
-    if(handWobble >= 0.99) {
-        par = 1;
-    } else if(handWobble <= -0.99) {
-        par = 0;
-    }
-    if(par == 0) {
-        handWobble += 0.01;
-    } else {
-        handWobble -= 0.01;
-    }
-}
-
-float player::getHandWobble() {
-    return handWobble;
-}
 
 void player::updateGravity() {
     
+}
+
+void player::updatePrevPos() {
+    prevX = x;
+    prevY = y;
+}
+
+bool player::checkMove(float& rat) {
+    if(prevX == x && prevY == y) {
+        return false;
+    } else {
+        rat = sqrt(pow(prevX-x,2)+pow(prevY-y,2));
+        rat *= 5;
+        rat /= 7;
+        return true;
+    }
+}
+
+void player::updateWobble() {
+    if (wobble > 1) {
+            wobble = -1;
+        }
+    if(prevX!= x || prevY!= y) {
+        handMoveRatio = sqrt(pow(prevX-x,2)+pow(prevY-y,2));
+        handMoveRatio *= 5;
+        handMoveRatio /= 7;
+        wobble += 0.015*handMoveRatio;
+    } else {
+        if((wobble>-1 && wobble < -0.5) || (wobble > 0 && wobble < 0.5)) {
+            wobble+=0.015;
+        }
+        if((wobble > -0.5 && wobble < 0) || (wobble > 0.5 && wobble < 1)) {
+            wobble -=0.015;
+        }
+    }   
+}
+
+float player::getHandMoveX() {
+    return 30 * cos(M_PI * wobble);
+}
+
+float player::getHandMoveY() {
+    return 50 * sin(-abs(wobble) * M_PI) / 2;
 }

@@ -2,6 +2,7 @@ class dispcontrol {
 
     SDL_Texture *images[10];
     SDL_Rect rects[10];
+    SDL_Rect gunPos;
 
     //frame limiter
     unsigned int a = SDL_GetTicks();
@@ -18,5 +19,5 @@ class dispcontrol {
         bool fpsCalc();
         void updateGun(float a);
         void setRect(int i, int x, int ratio);
-        void handwobblesetrect(SDL_Rect& rect);
+        SDL_Rect* setGunPos(int x, int y);
 };

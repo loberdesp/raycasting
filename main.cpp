@@ -10,9 +10,6 @@ int main(int argc, char *args[])
 	game G;
 	// soundcontrol SC;
 
-	// tmp hand wobble
-	float tmp = 0;
-
 	// define win and rend
 	SDL_Window *window = NULL;
 	SDL_Renderer *renderer = NULL;
@@ -28,12 +25,10 @@ int main(int argc, char *args[])
 		window = SDL_CreateWindow("RAYCAST", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINX, WINY, SDL_WINDOW_SHOWN);
 		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-		// hidden mouse and relative movement
-		SDL_SetRelativeMouseMode(SDL_TRUE);
+		SDL_SetRelativeMouseMode(SDL_TRUE); // Enable relative mouse mode
 
-		// Load stuff
-		M.initMap();
-		DC.loadtextures(renderer);
+		M.initMap();			   // load array map
+		DC.loadtextures(renderer); // load textures
 		// SC.loadsounds();
 
 		if (window == NULL)
@@ -57,29 +52,23 @@ int main(int argc, char *args[])
 						quit = C.eventSwitch();
 					}
 
-					// keeping angle in <-180;180> and calculation for straight movement
-					P.checkAngle();
-					P.calcRot(0);
-
-					// do working step sounds and gun movement
+					P.checkAngle(); // keep angle in <-180;180>
+					P.calcRot(0);	// forward movement reset
 					// SC.playsound(0);
 
-					// player movement, rotation and collision detection passing player and map as argument by reference
-					bool move = C.kbHandle(&P, &M);
+					P.updatePrevPos();	   // save previous position to check if player moved in last frame
+					C.kbHandle(&P, &M);	   // keyboard handling
+					P.updateWobble();	   // calculation and update for gun wobble
+					C.mouseHandle(&P, &M); // mouse handling
 
-					C.mouseHandle(&P, &M);
+					DC.updatePlayerPos(P.getX(), P.getY()); // update player position every frame
 
-					// update player position every frame
-					DC.updatePlayerPos(P.getX(), P.getY());
-
-					// black background display
 					SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-					SDL_RenderClear(renderer);
+					SDL_RenderClear(renderer); // clear window with black
 
 					float a, b, wallH, o = 0;
 					float hor;
-					for (int i = MAPSIZE * 4; i >= -MAPSIZE * 4; i--)
-					{
+					for (int i = MAPSIZE * 4; i >= -MAPSIZE * 4; i--) {  	// fov loop
 						a = P.getX();
 						b = P.getY();
 						P.calcRot(float(i) / 8);
@@ -87,13 +76,12 @@ int main(int argc, char *args[])
 						std::vector<float> tmp(5, 99);
 						hitVec.push_back(tmp);
 
-						if (M.getline(a, b, P.getVecX(), P.getVecY(), hor, hitVec))
-						{
-
+						if (M.getline(a, b, P.getVecX(), P.getVecY(), hor, hitVec)) {
 							G.update(renderer, &P, &M, &DC, hitVec.back()[0], hitVec.back()[1], i, wallH, o, hitVec.back()[2]);
 							hitVec.pop_back();
 
 							G.drawFloor(renderer, &P, wallH, o);
+							G.drawCeiling(renderer, &P, wallH, o);
 
 							if (hitVec.size() != 1)
 							{
@@ -103,84 +91,23 @@ int main(int argc, char *args[])
 									hitVec.pop_back();
 								}
 							}
-						}
-						else
-						{
+						} else {
 							G.update(renderer, &P, &M, &DC, a, b, i, wallH, o, hor);
 							G.drawFloor(renderer, &P, wallH, o);
+							G.drawCeiling(renderer, &P, wallH, o);
 						}
-
-						// ceiling
-						SDL_Rect rceiling;
-						rceiling.x = WINY + o * TILESIZE / 8;
-						rceiling.y = -1;
-						rceiling.w = TILESIZE / 8;
-						rceiling.h = (WINY / 2 - wallH / 2) + P.getPitch() + 1;
-						SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-						SDL_RenderFillRect(renderer, &rceiling);
 						o++;
 					}
 
-					// grid display
-					for (int i = 0; i < MAPSIZE; i++)
-					{
-						SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-						SDL_RenderDrawLine(renderer, i * TILESIZE, 0, i * TILESIZE, WINY - TILESIZE);
-						SDL_RenderDrawLine(renderer, 0, i * TILESIZE, WINY - TILESIZE, i * TILESIZE);
-					}
-
-					for (int i = 0; i < MAPSIZE; i++)
-					{
-						SDL_Rect r;
-						r.w = TILESIZE;
-						r.h = TILESIZE;
-
-						for (int j = 0; j < MAPSIZE; j++)
-						{
-							if (M.checkBlock(i, j) != 0)
-							{
-								r.x = i * TILESIZE;
-								r.y = j * TILESIZE;
-
-								if (M.checkBlock(i, j) % 10 == 0)
-								{
-									SDL_SetRenderDrawColor(renderer, 0, 255, 0, 0);
-								}
-								else
-								{
-									SDL_SetRenderDrawColor(renderer, 255, 0, 0, 0);
-								}
-								SDL_RenderFillRect(renderer, &r);
-							}
-						}
-					}
-					// player display
-
-					// tmp hand wobble
-					if (tmp > 1)
-					{
-						tmp = -1;
-					}
-					if (move)
-					{
-						tmp += 0.015;
-					}
-					float handX = 30 * cos(M_PI * tmp);
-					float handY = 50 * sin(-abs(tmp) * M_PI) / 2;
-
-					SDL_Rect tmpHand;
-					DC.handwobblesetrect(tmpHand);
-					tmpHand.x += handX;
-					tmpHand.y -= handY;
+					G.drawTwoDim(renderer, &M);
 
 					// player display
 					SDL_RenderCopyEx(renderer, DC.getImg(0), NULL, DC.getRect(0), -P.getAngle(), NULL, SDL_FLIP_NONE);
 
 					// gun display
-					SDL_RenderCopyEx(renderer, DC.getImg(1), NULL, &tmpHand, 0, NULL, SDL_FLIP_NONE);
+					SDL_RenderCopyEx(renderer, DC.getImg(1), NULL, DC.setGunPos(P.getHandMoveX(), P.getHandMoveY()), 0, NULL, SDL_FLIP_NONE);
 
-
-					//crosshair display
+					// crosshair display
 					SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
 					SDL_RenderDrawLine(renderer, 3 * WINY / 2 - 5, WINY / 2 - 5, 3 * WINY / 2 + 5, WINY / 2 + 5);
 					SDL_RenderDrawLine(renderer, 3 * WINY / 2 - 5, WINY / 2 + 5, 3 * WINY / 2 + 5, WINY / 2 - 5);
