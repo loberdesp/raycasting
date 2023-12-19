@@ -15,7 +15,7 @@ void dispcontrol::loadtextures(SDL_Renderer *render)
     rects[i].y = WINY / 2 - PSIZE / 2;
     rects[i].w = PSIZE;
     rects[i].h = PSIZE;
-    i++;
+    i++; 
 
 
 
