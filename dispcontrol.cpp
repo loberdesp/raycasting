@@ -7,7 +7,7 @@ void dispcontrol::loadtextures(SDL_Renderer *render)
 {
 
     int w, h, i; // texture width & height
-    i = 0;
+    i = 0; 
     // player txt
     images[i] = IMG_LoadTexture(render, "../assets/img/player.png");
     SDL_QueryTexture(images[0], NULL, NULL, &w, &h);
