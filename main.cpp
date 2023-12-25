@@ -49,7 +49,7 @@ int main(int argc, char *args[])
 					// event handling
 					while (SDL_PollEvent(C.getEvent()))
 					{
-						quit = C.eventSwitch();
+						quit = C.eventSwitch(); 
 					}
 
 					P.checkAngle(); // keep angle in <-180;180>
