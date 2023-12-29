@@ -80,8 +80,8 @@ int main(int argc, char *args[])
 							G.update(renderer, &P, &M, &DC, hitVec.back()[0], hitVec.back()[1], i, wallH, o, hitVec.back()[2]);
 							hitVec.pop_back();
 
-							G.drawFloor(renderer, &P, wallH, o);
-							G.drawCeiling(renderer, &P, wallH, o);
+							//G.drawFloor(renderer, &P, wallH, o);
+							//G.drawCeiling(renderer, &P, wallH, o);
 
 							if (hitVec.size() != 1)
 							{
@@ -93,8 +93,8 @@ int main(int argc, char *args[])
 							}
 						} else {
 							G.update(renderer, &P, &M, &DC, a, b, i, wallH, o, hor);
-							G.drawFloor(renderer, &P, wallH, o);
-							G.drawCeiling(renderer, &P, wallH, o);
+							//G.drawFloor(renderer, &P, wallH, o);
+							//G.drawCeiling(renderer, &P, wallH, o);
 						}
 						o++;
 					}
