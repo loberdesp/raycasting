@@ -11,9 +11,8 @@ void game::update(SDL_Renderer *renderer, player *P, map *M, dispcontrol *DC, fl
 	int ratio = M->checkBlock((a + P->getVecX()) * MAPSIZE / WINY, (b - P->getVecY()) * MAPSIZE / WINY) % 10;
 	tmpRect = M->rayWall(wallH, P->getPitch(), o, ratio);
 
-
 	DC->wallImgCalc(hor, a, b, ratio);
-	DC->fog(dist);
+	DC->fog(dist, hor);
 
 	SDL_RenderCopyEx(renderer, DC->getImg(2), DC->getRect(2), &tmpRect, 0, NULL, SDL_FLIP_NONE);
 }

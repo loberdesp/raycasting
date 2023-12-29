@@ -22,5 +22,5 @@ class dispcontrol {
         SDL_Rect* setGunPos(int x, int y);
         void darkenTexture(int i, int r, int g , int b);
         void wallImgCalc(bool hor, float a, float b, int ratio);
-        void fog(float d);
+        void fog(float d, bool hor);
 };
