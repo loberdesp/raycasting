@@ -10,6 +10,7 @@ void game::update(SDL_Renderer *renderer, player *P, map *M, dispcontrol *DC, fl
 	SDL_Rect tmpRect;
 	int ratio = M->checkBlock((a + P->getVecX()) * MAPSIZE / WINY, (b - P->getVecY()) * MAPSIZE / WINY) % 10;
 	tmpRect = M->rayWall(wallH, P->getPitch(), o, ratio);
+	tmpRect = M->rayWall(wallH, P->getPitch(), o, ratio);
 
 
 
