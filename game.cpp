@@ -9,22 +9,54 @@ void game::update(SDL_Renderer *renderer, player *P, map *M, dispcontrol *DC, fl
 
 	SDL_Rect tmpRect;
 	int ratio = M->checkBlock((a + P->getVecX()) * MAPSIZE / WINY, (b - P->getVecY()) * MAPSIZE / WINY) % 10;
-	tmpRect = M->rayWall(wallH, P->getPitch(), o, ratio); 
+	tmpRect = M->rayWall(wallH, P->getPitch(), o, ratio);
 
-	// shades when wall is hit vertically
-	if (hor)
+
+
+
+
+
+	float ray = FOV * (floor(0.5f * WINY) - o) / (WINY - 1);
+	float rayidk = 0.5f * tan(ray * (M_PI / 180)) / tan(0.5f * FOV * M_PI / 180);
+	short posit = static_cast<short>(round(WINY * (0.5f - rayidk)));
+	tmpRect.x = posit + WINY;
+
+	if (o < FOV * 8)
 	{
-		float diff = (a * MAPSIZE / 8) / WINY - int((a * MAPSIZE / 8) / WINY);
-		DC->setRect(2, diff * 2074, ratio);
-		SDL_RenderCopyEx(renderer, DC->getImg(2), DC->getRect(2), &tmpRect, 0, NULL, SDL_FLIP_NONE);
+		float raynext = FOV * (floor(0.5f * WINY) - o + 1) / (WINY - 1);
+		float rayidknext = 0.5f * tan(raynext * (M_PI / 180)) / tan(0.5f * FOV * M_PI / 180);
+		short positnext = static_cast<short>(round(WINY * (0.5f - rayidknext)));
+		// tmpRect.w = std::max(1, positnext - posit);
+		if (posit - positnext > 1)
+		{
+
+
+		}
 	}
-	else
-	{
-		float diff = (b * MAPSIZE / 8) / WINY - int((b * MAPSIZE / 8) / WINY);
-		DC->setRect(3, diff * 2074, ratio);
-		SDL_RenderCopyEx(renderer, DC->getImg(3), DC->getRect(3), &tmpRect, 0, NULL, SDL_FLIP_NONE);
-	}
+
+	// uber dirty fix for my problem
+	// tmpRect.w = 2;
+
+
+
+
+
+
+
+	DC->wallImgCalc(hor, a, b, ratio);
+	// DC->fog(dist, hor);
+
+	SDL_RenderCopyEx(renderer, DC->getImg(2), DC->getRect(2), &tmpRect, 0, NULL, SDL_FLIP_NONE);
 }
+
+
+
+
+
+
+
+
+
 
 void game::drawFloor(SDL_Renderer *renderer, player *P, float wallH, int o)
 {

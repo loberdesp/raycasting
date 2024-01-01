@@ -57,6 +57,7 @@
 		"xfacet": "cpp",
 		"xiosbase": "cpp",
 		"xlocinfo": "cpp",
-		"xmemory": "cpp"
+		"xmemory": "cpp",
+		"fstream": "cpp"
 	}
 }

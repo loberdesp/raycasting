@@ -49,7 +49,7 @@ int main(int argc, char *args[])
 					// event handling
 					while (SDL_PollEvent(C.getEvent()))
 					{
-						quit = C.eventSwitch(); 
+						quit = C.eventSwitch();
 					}
 
 					P.checkAngle(); // keep angle in <-180;180>
@@ -66,35 +66,54 @@ int main(int argc, char *args[])
 					SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 					SDL_RenderClear(renderer); // clear window with black
 
-					float a, b, wallH, o = 0;
-					float hor;
-					for (int i = MAPSIZE * 4; i >= -MAPSIZE * 4; i--) {  	// fov loop
+					float a = 0;
+					float b = 0;
+					float wallH = 0;
+					float o = 0;
+					float hor = 0;
+					float fixedAngle = 0;
+
+					for (int i = MAPSIZE*4; i >= -MAPSIZE*4; i--)
+					{ // fov loop
 						a = P.getX();
 						b = P.getY();
-						P.calcRot(float(i) / 8);
+
+
+
+
+						
+
+						//float rayidk = 0.5f * tan()
+
+						fixedAngle = i;
+
+						P.calcRot(float(fixedAngle) / 8);
 						std::vector<std::vector<float>> hitVec;
 						std::vector<float> tmp(5, 99);
 						hitVec.push_back(tmp);
 
-						if (M.getline(a, b, P.getVecX(), P.getVecY(), hor, hitVec)) {
-							G.update(renderer, &P, &M, &DC, hitVec.back()[0], hitVec.back()[1], i, wallH, o, hitVec.back()[2]);
+						if (M.getline(a, b, P.getVecX(), P.getVecY(), hor, hitVec))
+						{
+							G.update(renderer, &P, &M, &DC, hitVec.back()[0], hitVec.back()[1], fixedAngle, wallH, o, hitVec.back()[2]);
 							hitVec.pop_back();
 
-							G.drawFloor(renderer, &P, wallH, o);
-							G.drawCeiling(renderer, &P, wallH, o);
+							// G.drawFloor(renderer, &P, wallH, o);
+							// G.drawCeiling(renderer, &P, wallH, o);
 
 							if (hitVec.size() != 1)
 							{
 								while (hitVec.size() > 1)
 								{
-									G.update(renderer, &P, &M, &DC, hitVec.back()[0], hitVec.back()[1], i, wallH, o, hitVec.back()[2]);
+									G.update(renderer, &P, &M, &DC, hitVec.back()[0], hitVec.back()[1], fixedAngle, wallH, o, hitVec.back()[2]);
 									hitVec.pop_back();
 								}
 							}
-						} else {
-							G.update(renderer, &P, &M, &DC, a, b, i, wallH, o, hor);
-							G.drawFloor(renderer, &P, wallH, o);
-							G.drawCeiling(renderer, &P, wallH, o);
+						}
+						else
+						{
+							G.update(renderer, &P, &M, &DC, a, b, fixedAngle, wallH, o, hor);
+							// G.drawFloor(renderer, &P, wallH, o);
+							// G.drawCeiling(renderer, &P, wallH, o);
 						}
 						o++;
 					}
