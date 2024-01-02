@@ -7,6 +7,7 @@
 #include <time.h>
 #include <cmath>
 #include <vector>
+#include <unordered_map>
 
 #define WINY 512
 #define WINX WINY * 2

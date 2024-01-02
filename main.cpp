@@ -73,17 +73,69 @@ int main(int argc, char *args[])
 					float hor = 0;
 					float fixedAngle = 0;
 
+
+
+
+
+						//poor textured floor attempt
+
+
+
+
+						// float vertical_fov_ratio = tan(M_PI * 0.5f * FOV / 180);
+						// float floor_start = (WINY / 2 + wallH / 2) + P.getPitch();
+						// float start_stripe_x = -tan(0.5f * FOV * M_PI / 180);
+						// float end_stripe_x = vertical_fov_ratio * (1 - 2.f / WINY);
+
+
+						// float ray_direction_end_x = cos(P.getVecX() * M_PI / 180) + end_stripe_x * cos(M_PI / 180 * (P.getVecX() - 90));
+						// float ray_direction_end_y = -sin(P.getVecX() * M_PI / 180) - end_stripe_x * sin(M_PI / 180 * (P.getVecX() - 90));
+						// float ray_direction_start_x = cos(P.getVecX() * M_PI / 180) + start_stripe_x * cos(M_PI / 180 * (P.getVecX() - 90));
+						// float ray_direction_start_y = -sin(P.getVecX() * M_PI / 180) - start_stripe_x * sin(M_PI / 180 * (P.getVecX() - 90));
+
+						
+						// SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+
+						// for(int af = floor_start; af < WINY; af++) {
+
+						// 	float floor_step_x;
+						// 	float floor_step_y;
+						// 	float floor_x;
+						// 	float floor_y;
+						// 	float row_distance;
+
+						// 	int row_y = af - floor_start;
+
+						// 	row_distance = (0 == row_y) ? FLT_MAX : (WINY/2) / (row_y * vertical_fov_ratio);
+						// 	//std::cout << row_distance << std::endl;
+
+						// 	floor_step_x = row_distance * (ray_direction_end_x - ray_direction_start_x) / WINY;
+						// 	floor_step_y = row_distance * (ray_direction_end_y - ray_direction_start_y) / WINY;
+						// 	floor_x = 0.5f + P.getX() + ray_direction_start_x * row_distance;
+						// 	floor_y = 0.5f + P.getY() + ray_direction_start_y * row_distance;
+
+						// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 					for (int i = MAPSIZE*4; i >= -MAPSIZE*4; i--)
-					{ // fov loop
+					{
 						a = P.getX();
 						b = P.getY();
 
-
-
-
-						
-
-						//float rayidk = 0.5f * tan()
 
 						fixedAngle = i;
 
@@ -118,6 +170,7 @@ int main(int argc, char *args[])
 						o++;
 					}
 
+
 					G.drawTwoDim(renderer, &M);
 
 					// player display
@@ -130,6 +183,8 @@ int main(int argc, char *args[])
 					SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
 					SDL_RenderDrawLine(renderer, 3 * WINY / 2 - 5, WINY / 2 - 5, 3 * WINY / 2 + 5, WINY / 2 + 5);
 					SDL_RenderDrawLine(renderer, 3 * WINY / 2 - 5, WINY / 2 + 5, 3 * WINY / 2 + 5, WINY / 2 - 5);
+
+					
 
 					SDL_RenderPresent(renderer);
 				}

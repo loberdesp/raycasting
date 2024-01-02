@@ -15,8 +15,6 @@ void game::update(SDL_Renderer *renderer, player *P, map *M, dispcontrol *DC, fl
 
 
 
-
-
 	float ray = FOV * (floor(0.5f * WINY) - o) / (WINY - 1);
 	float rayidk = 0.5f * tan(ray * (M_PI / 180)) / tan(0.5f * FOV * M_PI / 180);
 	short posit = static_cast<short>(round(WINY * (0.5f - rayidk)));
@@ -24,20 +22,11 @@ void game::update(SDL_Renderer *renderer, player *P, map *M, dispcontrol *DC, fl
 
 	if (o < FOV * 8)
 	{
-		float raynext = FOV * (floor(0.5f * WINY) - o + 1) / (WINY - 1);
+		float raynext = FOV * (floor(0.5f * WINY) - o - 1) / (WINY - 1);
 		float rayidknext = 0.5f * tan(raynext * (M_PI / 180)) / tan(0.5f * FOV * M_PI / 180);
 		short positnext = static_cast<short>(round(WINY * (0.5f - rayidknext)));
-		// tmpRect.w = std::max(1, positnext - posit);
-		if (posit - positnext > 1)
-		{
-
-
-		}
+		tmpRect.w = std::max(1, positnext - posit);
 	}
-
-	// uber dirty fix for my problem
-	// tmpRect.w = 2;
-
 
 
 
@@ -45,19 +34,10 @@ void game::update(SDL_Renderer *renderer, player *P, map *M, dispcontrol *DC, fl
 
 
 	DC->wallImgCalc(hor, a, b, ratio);
-	// DC->fog(dist, hor);
+	DC->fog(dist, hor);
 
 	SDL_RenderCopyEx(renderer, DC->getImg(2), DC->getRect(2), &tmpRect, 0, NULL, SDL_FLIP_NONE);
 }
-
-
-
-
-
-
-
-
-
 
 void game::drawFloor(SDL_Renderer *renderer, player *P, float wallH, int o)
 {

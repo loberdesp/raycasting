@@ -39,6 +39,15 @@ void dispcontrol::loadtextures(SDL_Renderer *render)
     rects[i].w = TILESIZE / 8;
     rects[i].h = h;
     i++;
+
+
+    images[i] = IMG_LoadTexture(render, "../assets/img/floor.png");
+    SDL_QueryTexture(images[i], NULL, NULL, &w, &h);
+    rects[i].x = 0;
+    rects[i].y = 0;
+    rects[i].w = w;
+    rects[i].h = h;
+    i++;
 }
 
 SDL_Texture *dispcontrol::getImg(int i)
