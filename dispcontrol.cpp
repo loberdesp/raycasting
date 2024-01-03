@@ -40,14 +40,14 @@ void dispcontrol::loadtextures(SDL_Renderer *render)
     rects[i].h = h;
     i++;
 
-
-    images[i] = IMG_LoadTexture(render, "../assets/img/floor.png");
+    images[i] = IMG_LoadTexture(render, "../assets/img/wallplant.jpg");
     SDL_QueryTexture(images[i], NULL, NULL, &w, &h);
     rects[i].x = 0;
     rects[i].y = 0;
-    rects[i].w = w;
+    rects[i].w = TILESIZE / 8;
     rects[i].h = h;
     i++;
+
 }
 
 SDL_Texture *dispcontrol::getImg(int i)
@@ -107,28 +107,28 @@ void dispcontrol::darkenTexture(int i, int r, int g, int b)
     SDL_SetTextureColorMod(images[i], r, g, b);
 }
 
-void dispcontrol::wallImgCalc(bool hor, float a, float b, int ratio)
+void dispcontrol::wallImgCalc(int ratio, int txtVal, std::vector<std::vector<float>> &vec)
 {
     float diff = 0;
-    if (hor)
+    if (vec.back()[2])
     {
-        diff = (a * MAPSIZE / 8) / WINY - int((a * MAPSIZE / 8) / WINY);
+        diff = (vec.back()[0] * MAPSIZE / 8) / WINY - int((vec.back()[0] * MAPSIZE / 8) / WINY);
     }
     else
     {
-        diff = (b * MAPSIZE / 8) / WINY - int((b * MAPSIZE / 8) / WINY);
+        diff = (vec.back()[1] * MAPSIZE / 8) / WINY - int((vec.back()[1] * MAPSIZE / 8) / WINY);
     }
 
-    rects[2].x = diff * rects[2].h;
-    rects[2].y = 0;
+    rects[txtVal].x = diff * rects[txtVal].h;
+    rects[txtVal].y = 0;
 
     if (ratio != 0)
     {
-        rects[2].y = rects[2].h - rects[2].h * ratio / 10;
+        rects[txtVal].y = rects[txtVal].h - rects[txtVal].h * ratio / 10;
     }
 }
 
-void dispcontrol::fog(float d, bool hor)
+void dispcontrol::fog(float d, bool hor, int txtVal)
 {
     if (d > WINY / 2)
     {
@@ -136,27 +136,42 @@ void dispcontrol::fog(float d, bool hor)
 
         dim += 255;
 
-
-
         if (dim <= 0)
         {
             dim = 0;
         }
-        if(!hor && dim >=155) {
-            SDL_SetTextureColorMod(images[2], 155, 155, 155);
-        } else {
-            SDL_SetTextureColorMod(images[2], dim, dim, dim);
+        if (!hor && dim >= 155)
+        {
+            SDL_SetTextureColorMod(images[txtVal], 155, 155, 155);
+        }
+        else
+        {
+            SDL_SetTextureColorMod(images[txtVal], dim, dim, dim);
         }
     }
     else
     {
         if (hor)
         {
-            SDL_SetTextureColorMod(images[2], 255, 255, 255);
+            SDL_SetTextureColorMod(images[txtVal], 255, 255, 255);
         }
         else
         {
-            SDL_SetTextureColorMod(images[2], 155, 155, 155);
+            SDL_SetTextureColorMod(images[txtVal], 155, 155, 155);
         }
     }
+}
+
+void dispcontrol::displayPlayerGunCross(SDL_Renderer *render, player *P)
+{
+    // player display
+    SDL_RenderCopyEx(render, images[0], NULL, &rects[0], -P->getAngle(), NULL, SDL_FLIP_NONE);
+
+    // gun display
+    SDL_RenderCopyEx(render, images[1], NULL, setGunPos(P->getHandMoveX(), P->getHandMoveY()), 0, NULL, SDL_FLIP_NONE);
+
+    // crosshair display
+    SDL_SetRenderDrawColor(render, 0, 255, 255, 255);
+    SDL_RenderDrawLine(render, 3 * WINY / 2 - 5, WINY / 2 - 5, 3 * WINY / 2 + 5, WINY / 2 + 5);
+    SDL_RenderDrawLine(render, 3 * WINY / 2 - 5, WINY / 2 + 5, 3 * WINY / 2 + 5, WINY / 2 - 5);
 }

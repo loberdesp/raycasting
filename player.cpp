@@ -42,6 +42,7 @@ void player::checkAngle() {
     if(angle < -180) {
         angle +=360;
     }
+    calcRot(0);
 }
 
 void player::calcRot(float i) {

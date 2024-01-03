@@ -1,43 +1,30 @@
-void game::update(SDL_Renderer *renderer, player *P, map *M, dispcontrol *DC, float a, float b, int i, float &wallH, int o, float hor)
+void game::update(SDL_Renderer *renderer, player *P, map *M, dispcontrol *DC, int i, int o, std::vector<std::vector<float>> &vec)
 {
 	SDL_SetRenderDrawColor(renderer, 255, 255, 0, 0);
-	SDL_RenderDrawLine(renderer, P->getX(), P->getY(), a, b);
+	SDL_RenderDrawLine(renderer, P->getX(), P->getY(), vec.back()[0], vec.back()[1]);
 
-	float dist = sqrt(pow(a - P->getX(), 2) + pow(b - P->getY(), 2));
-	dist = dist * cos(i * M_PI / (180 * 8));
-	wallH = (MAPSIZE * WINY) / dist;
+	float dist = sqrt(pow(vec.back()[0] - P->getX(), 2) + pow(vec.back()[1] - P->getY(), 2));
+	dist *= cos(i * M_PI / (180 * 8));
+	vec.back()[5] = (MAPSIZE * WINY) / dist;
 
 	SDL_Rect tmpRect;
-	int ratio = M->checkBlock((a + P->getVecX()) * MAPSIZE / WINY, (b - P->getVecY()) * MAPSIZE / WINY) % 10;
-	tmpRect = M->rayWall(wallH, P->getPitch(), o, ratio);
-	tmpRect = M->rayWall(wallH, P->getPitch(), o, ratio);
+	int blockVal = M->checkBlock((vec.back()[0] + P->getVecX()) * MAPSIZE / WINY, (vec.back()[1] - P->getVecY()) * MAPSIZE / WINY);
+	int ratio = blockVal % 10;
+	int txtVal = 1+blockVal/10;
+	tmpRect = M->rayWall(vec.back()[5], P->getPitch(), o, ratio);
 
-
-
-
-	float ray = FOV * (floor(0.5f * WINY) - o) / (WINY - 1);
-	float rayidk = 0.5f * tan(ray * (M_PI / 180)) / tan(0.5f * FOV * M_PI / 180);
-	short posit = static_cast<short>(round(WINY * (0.5f - rayidk)));
-	tmpRect.x = posit + WINY;
-
-	if (o < FOV * 8)
-	{
-		float raynext = FOV * (floor(0.5f * WINY) - o - 1) / (WINY - 1);
-		float rayidknext = 0.5f * tan(raynext * (M_PI / 180)) / tan(0.5f * FOV * M_PI / 180);
-		short positnext = static_cast<short>(round(WINY * (0.5f - rayidknext)));
-		tmpRect.w = std::max(1, positnext - posit);
+	if (o < FOV * 8) {
+		tmpRect.w = std::max(1, M->angleDiffFix(o+1) - M->angleDiffFix(o));
 	}
 
+	DC->wallImgCalc(ratio, txtVal, vec);
+	DC->fog(dist, vec.back()[2], txtVal);
 
-
-
-
-
-	DC->wallImgCalc(hor, a, b, ratio);
-	DC->fog(dist, hor);
-
-	SDL_RenderCopyEx(renderer, DC->getImg(2), DC->getRect(2), &tmpRect, 0, NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(renderer, DC->getImg(txtVal), DC->getRect(txtVal), &tmpRect, 0, NULL, SDL_FLIP_NONE);
 }
+
+
+
 
 void game::drawFloor(SDL_Renderer *renderer, player *P, float wallH, int o)
 {

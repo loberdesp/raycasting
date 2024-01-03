@@ -21,6 +21,7 @@ class dispcontrol {
         void setRect(int i, int x, int ratio);
         SDL_Rect* setGunPos(int x, int y);
         void darkenTexture(int i, int r, int g , int b);
-        void wallImgCalc(bool hor, float a, float b, int ratio);
-        void fog(float d, bool hor);
+        void wallImgCalc(int ratio, int txtVal, std::vector<std::vector<float>> &vec);
+        void fog(float d, bool hor, int txtVal);
+        void displayPlayerGunCross(SDL_Renderer *render, player *P);
 };

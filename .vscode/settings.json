@@ -58,6 +58,9 @@
 		"xiosbase": "cpp",
 		"xlocinfo": "cpp",
 		"xmemory": "cpp",
-		"fstream": "cpp"
+		"fstream": "cpp",
+		"list": "cpp",
+		"xhash": "cpp",
+		"xtr1common": "cpp"
 	}
 }

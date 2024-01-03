@@ -14,4 +14,5 @@ class map {
         bool getline(float &x, float &y, float vx, float vy, float &horizontal, std::vector<std::vector<float>>& vec);
         int checkBlock(int x, int y);
         SDL_Rect rayWall(int h, float pitch, int k, int ratio);
+        short angleDiffFix(int o);
 };

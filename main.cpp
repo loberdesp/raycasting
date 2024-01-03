@@ -53,9 +53,7 @@ int main(int argc, char *args[])
 					}
 
 					P.checkAngle(); // keep angle in <-180;180>
-					P.calcRot(0);	// forward movement reset
 					// SC.playsound(0);
-
 					P.updatePrevPos();	   // save previous position to check if player moved in last frame
 					C.kbHandle(&P, &M);	   // keyboard handling
 					P.updateWobble();	   // calculation and update for gun wobble
@@ -66,21 +64,8 @@ int main(int argc, char *args[])
 					SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 					SDL_RenderClear(renderer); // clear window with black
 
-					float a = 0;
-					float b = 0;
-					float wallH = 0;
-					float o = 0;
-					float hor = 0;
-					float fixedAngle = 0;
-
-
-
-
 
 						//poor textured floor attempt
-
-
-
 
 						// float vertical_fov_ratio = tan(M_PI * 0.5f * FOV / 180);
 						// float floor_start = (WINY / 2 + wallH / 2) + P.getPitch();
@@ -117,75 +102,28 @@ int main(int argc, char *args[])
 						// }
 
 
+					float o = 0;
+					float hor = 0;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-					for (int i = MAPSIZE*4; i >= -MAPSIZE*4; i--)
-					{
-						a = P.getX();
-						b = P.getY();
-
-
-						fixedAngle = i;
-
-						P.calcRot(float(fixedAngle) / 8);
+					for (int i = MAPSIZE*4; i >= -MAPSIZE*4; i--) {
+						float a = P.getX();
+						float b = P.getY();
+						P.calcRot(float(i) / 8);
 						std::vector<std::vector<float>> hitVec;
-						std::vector<float> tmp(5, 99);
-						hitVec.push_back(tmp);
-
-						if (M.getline(a, b, P.getVecX(), P.getVecY(), hor, hitVec))
-						{
-							G.update(renderer, &P, &M, &DC, hitVec.back()[0], hitVec.back()[1], fixedAngle, wallH, o, hitVec.back()[2]);
+						std::vector<float> bs(5, 99);
+						hitVec.push_back(bs);
+						M.getline(a, b, P.getVecX(), P.getVecY(), hor, hitVec);
+						while (hitVec.size() > 1) {
+							G.update(renderer, &P, &M, &DC, i, o, hitVec);
 							hitVec.pop_back();
-
-							// G.drawFloor(renderer, &P, wallH, o);
-							// G.drawCeiling(renderer, &P, wallH, o);
-
-							if (hitVec.size() != 1)
-							{
-								while (hitVec.size() > 1)
-								{
-									G.update(renderer, &P, &M, &DC, hitVec.back()[0], hitVec.back()[1], fixedAngle, wallH, o, hitVec.back()[2]);
-									hitVec.pop_back();
-								}
-							}
-						}
-						else
-						{
-							G.update(renderer, &P, &M, &DC, a, b, fixedAngle, wallH, o, hor);
-							// G.drawFloor(renderer, &P, wallH, o);
-							// G.drawCeiling(renderer, &P, wallH, o);
 						}
 						o++;
 					}
 
 
 					G.drawTwoDim(renderer, &M);
-
-					// player display
-					SDL_RenderCopyEx(renderer, DC.getImg(0), NULL, DC.getRect(0), -P.getAngle(), NULL, SDL_FLIP_NONE);
-
-					// gun display
-					SDL_RenderCopyEx(renderer, DC.getImg(1), NULL, DC.setGunPos(P.getHandMoveX(), P.getHandMoveY()), 0, NULL, SDL_FLIP_NONE);
-
-					// crosshair display
-					SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
-					SDL_RenderDrawLine(renderer, 3 * WINY / 2 - 5, WINY / 2 - 5, 3 * WINY / 2 + 5, WINY / 2 + 5);
-					SDL_RenderDrawLine(renderer, 3 * WINY / 2 - 5, WINY / 2 + 5, 3 * WINY / 2 + 5, WINY / 2 - 5);
-
-					
-
+					DC.displayPlayerGunCross(renderer, &P);
 					SDL_RenderPresent(renderer);
 				}
 			}

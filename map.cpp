@@ -9,7 +9,7 @@ void map::initMap()
     // 0 - empty space
     // 1 - wall
 
-    mapVector[0] = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
+    mapVector[0] = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 20, 20, 20, 20, 20, 20, 20, 20, 20, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
     mapVector[1] = {10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10};
     mapVector[2] = {10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10};
     mapVector[3] = {10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10};
@@ -163,6 +163,7 @@ bool map::getline(float &x, float &y, float vx, float vy, float &horizontal, std
                 temp.push_back(horizontal);
                 temp.push_back(blockX);
                 temp.push_back(blockY);
+                temp.push_back(0);
                 vec.push_back(temp);
             }
 
@@ -191,6 +192,7 @@ bool map::getline(float &x, float &y, float vx, float vy, float &horizontal, std
                 tmp.push_back(horizontal);
                 tmp.push_back(blockXx);
                 tmp.push_back(blockYy);
+                tmp.push_back(0);
                 vec.push_back(tmp);
             }
             x += vx;
@@ -204,10 +206,10 @@ int map::checkBlock(int x, int y)
     return mapVector[y][x];
 }
 
-SDL_Rect map::rayWall(int h, float pitch, int k, int ratio)
+SDL_Rect map::rayWall(int h, float pitch, int o, int ratio)
 {
     SDL_Rect rwall;
-    rwall.x = WINY + k * (TILESIZE / 8);
+    rwall.x = angleDiffFix(o);
     rwall.w = TILESIZE / 8;
     if (ratio == 0)
     {
@@ -220,4 +222,12 @@ SDL_Rect map::rayWall(int h, float pitch, int k, int ratio)
         rwall.h = h * ratio / 10;
     }
     return rwall;
+}
+
+
+short map::angleDiffFix(int o) {
+    float ray = FOV * (floor(0.5f * WINY) - o) / (WINY - 1);
+	float rayidk = 0.5f * tan(ray * (M_PI / 180)) / tan(0.5f * FOV * M_PI / 180);
+	short posit = static_cast<short>(round(WINY * (0.5f - rayidk)));
+    return posit + WINY;
 }
