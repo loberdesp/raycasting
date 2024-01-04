@@ -11,7 +11,7 @@ void game::update(SDL_Renderer *renderer, player *P, map *M, dispcontrol *DC, in
 	int blockVal = M->checkBlock((vec.back()[0] + P->getVecX()) * MAPSIZE / WINY, (vec.back()[1] - P->getVecY()) * MAPSIZE / WINY);
 	int ratio = blockVal % 10;
 	int txtVal = 1+blockVal/10;
-	tmpRect = M->rayWall(vec.back()[5], P->getPitch(), o, ratio);
+	tmpRect = M->rayWall(P->getPitch(), o, ratio, vec);
 
 	if (o < FOV * 8) {
 		tmpRect.w = std::max(1, M->angleDiffFix(o+1) - M->angleDiffFix(o));

@@ -17,7 +17,7 @@ void dispcontrol::loadtextures(SDL_Renderer *render)
     rects[i].h = PSIZE;
     i++;
 
-    images[i] = IMG_LoadTexture(render, "../assets/img/duke.png");
+    images[i] = IMG_LoadTexture(render, "../assets/img/shotgun.png");
     SDL_QueryTexture(images[i], NULL, NULL, &w, &h);
     w *= 2;
     h *= 2;
@@ -32,7 +32,7 @@ void dispcontrol::loadtextures(SDL_Renderer *render)
     gunPos.h = h;
     i++;
 
-    images[i] = IMG_LoadTexture(render, "../assets/img/wallbright.jpg");
+    images[i] = IMG_LoadTexture(render, "../assets/img/brickwall.jpg");
     SDL_QueryTexture(images[i], NULL, NULL, &w, &h);
     rects[i].x = 0;
     rects[i].y = 0;
@@ -40,7 +40,15 @@ void dispcontrol::loadtextures(SDL_Renderer *render)
     rects[i].h = h;
     i++;
 
-    images[i] = IMG_LoadTexture(render, "../assets/img/wallplant.jpg");
+    images[i] = IMG_LoadTexture(render, "../assets/img/dawidos.jpg");
+    SDL_QueryTexture(images[i], NULL, NULL, &w, &h);
+    rects[i].x = 0;
+    rects[i].y = 0;
+    rects[i].w = TILESIZE / 8;
+    rects[i].h = h;
+    i++;
+
+    images[i] = IMG_LoadTexture(render, "../assets/img/plantwall.jpg");
     SDL_QueryTexture(images[i], NULL, NULL, &w, &h);
     rects[i].x = 0;
     rects[i].y = 0;
