@@ -8,34 +8,34 @@ player::player() {
 void player::colMove(bool &X, bool &Y) {
     if(X) {
 	    if(!Y) {
-			y -= vectorY;
+			y -= vectorY*timeElapsed*PLAYERSPEEDPERSEC;
 		}
 	}
 	if(Y) {
 		if(!X) {
-            x += vectorX;
+            x += vectorX*timeElapsed*PLAYERSPEEDPERSEC;
 		}
 	}
 	if(!X &&!Y) {
-        y -= vectorY;
-        x += vectorX;
+        y -= vectorY*timeElapsed*PLAYERSPEEDPERSEC;
+        x += vectorX*timeElapsed*PLAYERSPEEDPERSEC;
     }
 }
 
 void player::colMoveBack(bool &X, bool &Y) {
     if(X) {
 	    if(!Y) {
-			y += vectorY;
+			y += vectorY*timeElapsed*PLAYERSPEEDPERSEC;
 		}
 	}
 	if(Y) {
 		if(!X) {
-            x -= vectorX;
+            x -= vectorX*timeElapsed*PLAYERSPEEDPERSEC;
 		}
 	}
 	if(!X &&!Y) {
-        y += vectorY;
-        x -= vectorX;
+        y += vectorY*timeElapsed*PLAYERSPEEDPERSEC;
+        x -= vectorX*timeElapsed*PLAYERSPEEDPERSEC;
     }
 }
 

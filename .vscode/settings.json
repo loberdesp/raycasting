@@ -64,6 +64,12 @@
 		"xtr1common": "cpp",
 		"semaphore": "cpp",
 		"stop_token": "cpp",
-		"thread": "cpp"
+		"thread": "cpp",
+		"charconv": "cpp",
+		"locale": "cpp",
+		"xlocbuf": "cpp",
+		"xlocmes": "cpp",
+		"xlocmon": "cpp",
+		"xlocnum": "cpp"
 	}
 }

@@ -132,14 +132,18 @@ void map::checkCol(float x, float y, float vx, float vy, bool &colX, bool &colY)
             vx = -vy;
         }
     }
-    colX = isinWall(x + 50 * vx, y);
-    colY = isinWall(x, y - 50 * vy);
+    // colX = isinWall(x + COLISIONRANGE * vx, y);
+    // colY = isinWall(x, y - COLISIONRANGE * vy);
+    colX = false;
+    colY = false;
 }
 
 bool map::getline(float &x, float &y, float vx, float vy, float &horizontal, std::vector<std::vector<float>> &vec)
 {
+
     while (1)
     {
+        
         if (isinWall(x + vx, y - vy))
         {
             if (isinWall(x + vx, y))
@@ -153,7 +157,9 @@ bool map::getline(float &x, float &y, float vx, float vy, float &horizontal, std
 
             int blockX = (x + vx) * MAPSIZE / WINY;
             int blockY = (y - vy) * MAPSIZE / WINY;
+            
             int m = checkBlock(blockX, blockY) % 10;
+            
 
             if (vec.back()[3] != blockX || vec.back()[4] != blockY)
             {

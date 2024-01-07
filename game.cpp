@@ -83,12 +83,16 @@ void game::drawTwoDim(SDL_Renderer *renderer, map *M)
 	}
 }
 
-bool game::fpsCalc() {
+bool game::fpsCalc(player *P) {
     fpsA = std::chrono::steady_clock::now();
     fpsDelta = fpsA - fpsB;
-    if (fpsDelta >= std::chrono::duration<double>(1.0 / FPSCAP)) {
+
+    if (fpsDelta >= std::chrono::duration<double>(1.0 / FPS)) {
+
 		// FPS count
 		// 1 / fpsDelta.count()
+
+		P->setElapsed(fpsDelta.count());
         fpsB = fpsA;
         return true;
     }

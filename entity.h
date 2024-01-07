@@ -4,6 +4,7 @@ class entity {
         float x, y, z;                          // position
         float vectorX, vectorY, vectorZ;        // vector is basically speed in axis
         float prevX, prevY, prevZ;              // position in previous frame
+        float timeElapsed;                      // time elapsed since last frame for non-frame dependent movement
 
     public:
         entity();
@@ -31,4 +32,5 @@ class entity {
         void setVecY(float i);
         void setVecZ(float i);
 
+        void setElapsed(float t);
 };

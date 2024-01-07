@@ -16,7 +16,9 @@
 #define PSIZE WINY / 10
 #define SENSITIVITY 0.4
 #define FOV MAPSIZE
-#define FPSCAP 144
+#define FPS 144
+#define PLAYERSPEEDPERSEC 100
+#define COLISIONRANGE 1
 
 #include "entity.h"
 #include "player.h"

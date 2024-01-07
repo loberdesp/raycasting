@@ -5,6 +5,7 @@ class player : public entity {
     float handMoveRatio;
 
 
+
     public:
         player();
         void colMove(bool &X, bool &Y);
