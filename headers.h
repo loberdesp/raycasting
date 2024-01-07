@@ -4,10 +4,10 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
-#include <time.h>
 #include <cmath>
 #include <vector>
 #include <unordered_map>
+#include <chrono>
 
 #define WINY 512
 #define WINX WINY * 2
@@ -16,7 +16,9 @@
 #define PSIZE WINY / 10
 #define SENSITIVITY 0.4
 #define FOV MAPSIZE
+#define FPSCAP 144
 
+#include "entity.h"
 #include "player.h"
 #include "map.h"
 #include "soundcontrol.h"

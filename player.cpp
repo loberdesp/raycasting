@@ -1,80 +1,8 @@
 player::player() {
-    x = WINY/2;
-    y = WINY/2;
-    z = 0;
-    angle = 90;
-    pitch = 0;
     wobble = 0.5;
-    par = 0;
-    handMoveRatio = 0;
+
 
     std::cout << "Created Player!" << std::endl;
-}
-
-void player::setX(float i) {
-    x = i;
-}
-
-void player::setY(float i) {
-    y = i;
-}
-
-void player::addAngle(float i) {
-    angle += i;
-}
-
-float player::getX() {
-    return x;
-}
-
-float player::getY() {
-    return y;
-}
-
-int player::getAngle() {
-    return angle;
-}
-
-void player::checkAngle() {
-    if(angle > 180) {
-        angle-=360;
-    }
-    if(angle < -180) {
-        angle +=360;
-    }
-    calcRot(0);
-}
-
-void player::calcRot(float i) {
-    vectorX = 1;
-    vectorY = tan((angle+i)*M_PI/180);
-    if(abs(vectorX) > abs(vectorY)) {
-        vectorX = vectorX/abs(vectorX);
-        vectorY = vectorY/abs(vectorX);
-    } else {
-        vectorX = vectorX/abs(vectorY);
-        vectorY = vectorY/abs(vectorY);
-    }
-    if(angle+i > 90 || angle+i <-90) {
-        vectorX *= -1;
-        vectorY *= -1;
-    }
-}
-
-float player::getVecX() {
-    return vectorX*WINY/1000;
-}
-
-float player::getVecY() {
-    return vectorY*WINY/1000;
-}
-
-void player::setVecX(float i) {
-    vectorX=i;
-}
-
-void player::setVecY(float i) {
-    vectorY=i;
 }
 
 void player::colMove(bool &X, bool &Y) {
@@ -117,16 +45,6 @@ void player::addPitch(float i) {
 
 float player::getPitch() {
     return pitch;
-}
-
-
-void player::updateGravity() {
-    
-}
-
-void player::updatePrevPos() {
-    prevX = x;
-    prevY = y;
 }
 
 bool player::checkMove(float& rat) {

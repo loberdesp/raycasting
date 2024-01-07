@@ -28,7 +28,7 @@ int main(int argc, char *args[])
 		SDL_SetRelativeMouseMode(SDL_TRUE); // Enable relative mouse mode
 
 		M.initMap();			   // load array map
-		DC.loadtextures(renderer); // load textures
+		DC.loadtextures(renderer, window); // load textures
 		// SC.loadsounds();
 
 		if (window == NULL)
@@ -42,9 +42,11 @@ int main(int argc, char *args[])
 
 			while (quit == false)
 			{
+				
 				// execute if correct fps
-				if (DC.fpsCalc())
+				if (G.fpsCalc())
 				{
+					
 
 					// event handling
 					while (SDL_PollEvent(C.getEvent()))

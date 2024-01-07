@@ -1,3 +1,7 @@
+game::game() {
+    fps = 0;
+}
+
 void game::update(SDL_Renderer *renderer, player *P, map *M, dispcontrol *DC, int i, int o, std::vector<std::vector<float>> &vec)
 {
 	SDL_SetRenderDrawColor(renderer, 255, 255, 0, 0);
@@ -10,11 +14,12 @@ void game::update(SDL_Renderer *renderer, player *P, map *M, dispcontrol *DC, in
 	SDL_Rect tmpRect;
 	int blockVal = M->checkBlock((vec.back()[0] + P->getVecX()) * MAPSIZE / WINY, (vec.back()[1] - P->getVecY()) * MAPSIZE / WINY);
 	int ratio = blockVal % 10;
-	int txtVal = 1+blockVal/10;
+	int txtVal = 1 + blockVal / 10;
 	tmpRect = M->rayWall(P->getPitch(), o, ratio, vec);
 
-	if (o < FOV * 8) {
-		tmpRect.w = std::max(1, M->angleDiffFix(o+1) - M->angleDiffFix(o));
+	if (o < FOV * 8)
+	{
+		tmpRect.w = std::max(1, M->angleDiffFix(o + 1) - M->angleDiffFix(o));
 	}
 
 	DC->wallImgCalc(ratio, txtVal, vec);
@@ -22,9 +27,6 @@ void game::update(SDL_Renderer *renderer, player *P, map *M, dispcontrol *DC, in
 
 	SDL_RenderCopyEx(renderer, DC->getImg(txtVal), DC->getRect(txtVal), &tmpRect, 0, NULL, SDL_FLIP_NONE);
 }
-
-
-
 
 void game::drawFloor(SDL_Renderer *renderer, player *P, float wallH, int o)
 {
@@ -79,4 +81,18 @@ void game::drawTwoDim(SDL_Renderer *renderer, map *M)
 			}
 		}
 	}
+}
+
+bool game::fpsCalc() {
+    fpsA = std::chrono::steady_clock::now();
+    fpsDelta = fpsA - fpsB;
+    if (fpsDelta >= std::chrono::duration<double>(1.0 / FPSCAP)) {
+		// FPS count
+		// 1 / fpsDelta.count()
+        fpsB = fpsA;
+        return true;
+    }
+    else {
+        return false;
+    }
 }

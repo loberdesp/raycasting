@@ -3,8 +3,12 @@ dispcontrol::dispcontrol()
     std::cout << "Created Display Controller!" << std::endl;
 }
 
-void dispcontrol::loadtextures(SDL_Renderer *render)
+void dispcontrol::loadtextures(SDL_Renderer *render, SDL_Window *window)
 {
+    //load window icon
+    icon = SDL_LoadBMP("../assets/img/icon.bmp");
+    SDL_SetWindowIcon(window, icon);
+    SDL_FreeSurface(icon);
 
     int w, h, i; // texture width & height
     i = 0;
@@ -74,21 +78,6 @@ void dispcontrol::updatePlayerPos(int x, int y)
     rects[0].y = y - PSIZE / 2;
 }
 
-bool dispcontrol::fpsCalc()
-{
-    a = SDL_GetTicks();
-    delta = a - b;
-    // fps value
-    if (delta > 1000 / 150.0)
-    {
-        b = a;
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
 
 void dispcontrol::setRect(int i, int x, int ratio)
 {
