@@ -84,19 +84,29 @@ void controls::kbHandle(player *P, map *M)
 
 	if (keyboardState[SDL_SCANCODE_W])
 	{
+		P->updateMoveVectors();
+		
 		bool X, Y;
 		M->checkCol(P->getX(), P->getY(), P->getVecX(), P->getVecY(), X, Y);
 		P->colMove(X, Y);
 	}
 	if (keyboardState[SDL_SCANCODE_S])
 	{
+		if(P->getAngle()>=90) {
+			P->calcRot(-180);
+		} else {
+			P->calcRot(180);
+		}
+		P->updateMoveVectors();
 		bool X, Y;
 		M->checkCol(P->getX(), P->getY(), -P->getVecX(), -P->getVecY(), X, Y);
-		P->colMoveBack(X, Y);
+		
+		P->colMove(X, Y);
 	}
 	if (keyboardState[SDL_SCANCODE_A])
 	{
 		P->calcRot(90);
+		P->updateMoveVectors();
 		bool X, Y;
 		M->checkCol(P->getX(), P->getY(), P->getVecX(), P->getVecY(), X, Y);
 		P->colMove(X, Y);
@@ -104,6 +114,7 @@ void controls::kbHandle(player *P, map *M)
 	if (keyboardState[SDL_SCANCODE_D])
 	{
 		P->calcRot(-90);
+		P->updateMoveVectors();
 		bool X, Y;
 		M->checkCol(P->getX(), P->getY(), P->getVecX(), P->getVecY(), X, Y);
 		P->colMove(X, Y);

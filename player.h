@@ -9,7 +9,6 @@ class player : public entity {
     public:
         player();
         void colMove(bool &X, bool &Y);
-        void colMoveBack(bool &X, bool &Y);
         void addPitch(float i);
         float getPitch();
         bool checkMove(float& rat);

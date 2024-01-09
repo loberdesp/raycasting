@@ -8,34 +8,17 @@ player::player() {
 void player::colMove(bool &X, bool &Y) {
     if(X) {
 	    if(!Y) {
-			y -= vectorY*timeElapsed*PLAYERSPEEDPERSEC;
+			y -= moveVectorY;
 		}
 	}
 	if(Y) {
 		if(!X) {
-            x += vectorX*timeElapsed*PLAYERSPEEDPERSEC;
+            x += moveVectorX;
 		}
 	}
 	if(!X &&!Y) {
-        y -= vectorY*timeElapsed*PLAYERSPEEDPERSEC;
-        x += vectorX*timeElapsed*PLAYERSPEEDPERSEC;
-    }
-}
-
-void player::colMoveBack(bool &X, bool &Y) {
-    if(X) {
-	    if(!Y) {
-			y += vectorY*timeElapsed*PLAYERSPEEDPERSEC;
-		}
-	}
-	if(Y) {
-		if(!X) {
-            x -= vectorX*timeElapsed*PLAYERSPEEDPERSEC;
-		}
-	}
-	if(!X &&!Y) {
-        y += vectorY*timeElapsed*PLAYERSPEEDPERSEC;
-        x -= vectorX*timeElapsed*PLAYERSPEEDPERSEC;
+        y -= moveVectorY;
+        x += moveVectorX;
     }
 }
 
@@ -84,3 +67,7 @@ float player::getHandMoveX() {
 float player::getHandMoveY() {
     return 50 * sin(-abs(wobble) * M_PI) / 2;
 }
+
+
+
+

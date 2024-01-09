@@ -13,12 +13,13 @@
 #define WINX WINY * 2
 #define MAPSIZE 64
 #define TILESIZE WINY / MAPSIZE
-#define PSIZE WINY / 10
+#define PSIZE WINY / 16
 #define SENSITIVITY 0.4
 #define FOV MAPSIZE
-#define FPS 144
+#define FPS 165
 #define PLAYERSPEEDPERSEC 100
 #define COLISIONRANGE 1
+#define PLAYERHITBOXRADIUS PSIZE
 
 #include "entity.h"
 #include "player.h"

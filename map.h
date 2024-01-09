@@ -15,4 +15,6 @@ class map {
         int checkBlock(int x, int y);
         SDL_Rect rayWall(float pitch, int k, int ratio, std::vector<std::vector<float>>& vec);
         short angleDiffFix(int o);
+
+        void newCol(player* P, SDL_Renderer* renderer);
 };

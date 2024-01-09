@@ -70,7 +70,6 @@ int main(int argc, char *args[])
 						float a = P.getX();
 						float b = P.getY();
 
-
 						P.calcRot(float(i) / 8);
 						std::vector<std::vector<float>> hitVec; // vector of all wall hits on specific ray path
 						std::vector<float> bs(7, 99);
@@ -88,6 +87,8 @@ int main(int argc, char *args[])
 
 					G.drawTwoDim(renderer, &M);				// draw 2D map
 					DC.displayPlayerGunCross(renderer, &P); // display gun, 2D player and crosshair
+					SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+					M.newCol(&P, renderer);
 					SDL_RenderPresent(renderer);
 				}
 			}

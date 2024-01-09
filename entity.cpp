@@ -116,3 +116,26 @@ void entity::setElapsed(float t)
 {
     timeElapsed = t;
 }
+
+void entity::updateMoveVectors() {
+    moveVectorX = vectorX*timeElapsed*PLAYERSPEEDPERSEC;
+    moveVectorY = vectorY*timeElapsed*PLAYERSPEEDPERSEC;
+    moveVectorZ = vectorZ*timeElapsed*PLAYERSPEEDPERSEC;
+}
+
+float entity::getMoveVectorX() {
+    return moveVectorX;
+}
+
+float entity::getMoveVectorY() {
+    return moveVectorY;
+}
+
+float entity::getMoveVectorZ() {
+    return moveVectorZ;
+}
+
+void entity::move(float a, float b) {
+    y -= b;
+    x += a;
+}

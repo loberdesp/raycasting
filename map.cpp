@@ -134,6 +134,9 @@ void map::checkCol(float x, float y, float vx, float vy, bool &colX, bool &colY)
     }
     // colX = isinWall(x + COLISIONRANGE * vx, y);
     // colY = isinWall(x, y - COLISIONRANGE * vy);
+
+    // dla półokręgu szukamy wektora stycznego w punkcie kontaktu ze ścianą, gracz będzie się po nim poruszał z określoną prędkością
+    // jedyne co to trzeba znaleźć dokładny punkt styczności koła ze ścianą
     colX = false;
     colY = false;
 }
@@ -143,7 +146,7 @@ bool map::getline(float &x, float &y, float vx, float vy, float &horizontal, std
 
     while (1)
     {
-        
+
         if (isinWall(x + vx, y - vy))
         {
             if (isinWall(x + vx, y))
@@ -157,9 +160,8 @@ bool map::getline(float &x, float &y, float vx, float vy, float &horizontal, std
 
             int blockX = (x + vx) * MAPSIZE / WINY;
             int blockY = (y - vy) * MAPSIZE / WINY;
-            
+
             int m = checkBlock(blockX, blockY) % 10;
-            
 
             if (vec.back()[3] != blockX || vec.back()[4] != blockY)
             {
@@ -239,4 +241,120 @@ short map::angleDiffFix(int o)
     float rayidk = 0.5f * tan(ray * (M_PI / 180)) / tan(0.5f * FOV * M_PI / 180);
     short posit = static_cast<short>(round(WINY * (0.5f - rayidk)));
     return posit + WINY;
+}
+
+void map::newCol(player *P, SDL_Renderer *renderer)
+{
+    float nextX = P->getX();
+    float nextY = P->getY();
+    float ang = P->getAngle() + 90;
+
+    if (ang > 180)
+    {
+        ang -= 360;
+    }
+    if (ang < -180)
+    {
+        ang += 360;
+    }
+
+    int radius = PLAYERHITBOXRADIUS;
+    std::vector<int> angVector;
+    std::vector<float> posVector;
+
+    std::vector<int> blockVectorX;
+    std::vector<int> blockVectorY;
+    blockVectorX.push_back(99);
+    blockVectorY.push_back(99);
+
+    float minDistance = radius;
+    float smallestX;
+    float smallestY;
+    int smallestAng;
+
+    for (int i = ang; i > ang - 360; i -= 1)
+    { // find points on border of the player circle using maths hehe
+
+        int newang = i;
+        if (newang > 180)
+        {
+            newang -= 360;
+        }
+        if (newang < -180)
+        {
+            newang += 360;
+        }
+
+        float borderX = nextX + radius * cos(newang * M_PI / 180);
+        float borderY = nextY - radius * sin(newang * M_PI / 180);
+        SDL_RenderDrawPoint(renderer, borderX, borderY);
+
+        if (isinWall(borderX, borderY))
+        {
+            angVector.push_back(newang);
+            posVector.push_back(borderX);
+            posVector.push_back(borderY);
+            int blockX = (borderX)*MAPSIZE / WINY;
+            int blockY = (borderY)*MAPSIZE / WINY;
+
+            if (blockVectorX.back() != blockX || blockVectorY.back() != blockY)
+            {
+                blockVectorX.push_back(blockX);
+                blockVectorY.push_back(blockY);
+            }
+        }
+    }
+    if (blockVectorX.size() != 1)
+    {
+        SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
+        for (int i = 0; i < blockVectorX.size() - 1; i++)
+        {
+
+            float closestX = std::max(blockVectorX[i + 1] * TILESIZE, std::min(int(nextX), int(blockVectorX[i + 1] * TILESIZE + TILESIZE)));
+            float closestY = std::max(blockVectorY[i + 1] * TILESIZE, std::min(int(nextY), int(blockVectorY[i + 1] * TILESIZE + TILESIZE)));
+
+            float dist = sqrt(pow(nextX - closestX, 2) + pow(nextY - closestY, 2));
+
+            if (dist < minDistance)
+            {
+                minDistance = dist;
+                smallestX = closestX;
+                smallestY = closestY;
+            }
+        }
+
+        float kat = asin((nextY - smallestY) / minDistance) * 180 / M_PI;
+
+        if (smallestX < nextX)
+        {
+            if (smallestY < nextY)
+            {
+                kat = 180 - kat;
+            }
+            else
+            {
+                kat = -180 - kat;
+            }
+        }
+
+        SDL_RenderDrawLine(renderer, nextX, nextY, smallestX, smallestY);
+
+        if (P->getAngle() > int(kat))
+        { // kąt wektora stycznego, ustalamy czy w lewo czy w prawo od kąta gracza
+            kat += 90;
+        }
+        else
+        {
+            kat -= 90;
+        }
+
+        float vecsum = sqrt(pow(P->getMoveVectorX(), 2) + pow(P->getMoveVectorY(), 2));
+        float outputX = vecsum * cos(kat);
+        float outputY = vecsum * sin(kat);
+        // std::cout << outputX << " " << outputY << std::endl;
+
+        // something is messed up with values here
+
+        // P->move(outputX, outputY);
+    }
 }
