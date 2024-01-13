@@ -47,7 +47,7 @@ SDL_Event *controls::getEvent()
 	return &e;
 }
 
-void controls::kbHandle(player *P, map *M)
+void controls::kbHandle(player *P, map *M, SDL_Renderer *renderer)
 {
 	bool move = false;
 	if (keyboardState[SDL_SCANCODE_LEFT])
@@ -86,9 +86,10 @@ void controls::kbHandle(player *P, map *M)
 	{
 		P->updateMoveVectors();
 		
-		bool X, Y;
-		M->checkCol(P->getX(), P->getY(), P->getVecX(), P->getVecY(), X, Y);
-		P->colMove(X, Y);
+		// bool X, Y;
+		// M->checkCol(P->getX(), P->getY(), P->getVecX(), P->getVecY(), X, Y);
+		// P->colMove(X, Y);
+		M->newCol(P, renderer);
 	}
 	if (keyboardState[SDL_SCANCODE_S])
 	{

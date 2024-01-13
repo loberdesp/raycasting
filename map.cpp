@@ -258,8 +258,8 @@ void map::newCol(player *P, SDL_Renderer *renderer)
         ang += 360;
     }
 
-    int radius = PLAYERHITBOXRADIUS;
-    std::vector<int> angVector;
+    float radius = PLAYERHITBOXRADIUS;
+    std::vector<float> angVector;
     std::vector<float> posVector;
 
     std::vector<int> blockVectorX;
@@ -272,10 +272,10 @@ void map::newCol(player *P, SDL_Renderer *renderer)
     float smallestY;
     int smallestAng;
 
-    for (int i = ang; i > ang - 360; i -= 1)
+    for (int i = ang; i > ang - 180; i -= 1)
     { // find points on border of the player circle using maths hehe
 
-        int newang = i;
+        float newang = i;
         if (newang > 180)
         {
             newang -= 360;
@@ -304,7 +304,7 @@ void map::newCol(player *P, SDL_Renderer *renderer)
             }
         }
     }
-    if (blockVectorX.size() != 1)
+    if (blockVectorX.size() > 1)
     {
         SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
         for (int i = 0; i < blockVectorX.size() - 1; i++)
@@ -337,9 +337,7 @@ void map::newCol(player *P, SDL_Renderer *renderer)
             }
         }
 
-        SDL_RenderDrawLine(renderer, nextX, nextY, smallestX, smallestY);
-
-        if (P->getAngle() > int(kat))
+        if (P->getAngle() > kat)
         { // kąt wektora stycznego, ustalamy czy w lewo czy w prawo od kąta gracza
             kat += 90;
         }
@@ -351,10 +349,25 @@ void map::newCol(player *P, SDL_Renderer *renderer)
         float vecsum = sqrt(pow(P->getMoveVectorX(), 2) + pow(P->getMoveVectorY(), 2));
         float outputX = vecsum * cos(kat);
         float outputY = vecsum * sin(kat);
-        // std::cout << outputX << " " << outputY << std::endl;
 
-        // something is messed up with values here
+        if (outputX < 0.074)
+        {
+            outputX = 0;
+        }
 
-        // P->move(outputX, outputY);
+        if (outputY < 0.074)
+        {
+            outputX = 0;
+        }
+        std::cout << sin(kat) << " " << cos(kat) << " " << outputX << " " << outputY << " " << kat << std::endl;
+
+        // something is messed up with values her
+        SDL_RenderDrawLine(renderer, nextX, nextY, nextX + 100 * outputX, nextY - 100 * outputY);
+
+        P->move(outputX, outputY);
+    }
+    else
+    {
+        P->move(P->getMoveVectorX(), P->getMoveVectorY());
     }
 }

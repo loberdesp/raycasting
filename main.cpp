@@ -48,18 +48,19 @@ int main(int argc, char *args[])
 					{ // event handling
 						quit = C.eventSwitch();
 					}
+					SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+					SDL_RenderClear(renderer); // clear window with black
 
 					P.checkAngle(); // keep angle in <-180;180>
 					// SC.playsound(0);
 					P.updatePrevPos();	   // save previous position to check if player moved in last frame
-					C.kbHandle(&P, &M);	   // keyboard handling
+					
 					P.updateWobble();	   // calculation and update for gun wobble
 					C.mouseHandle(&P, &M); // mouse handling
 
 					DC.updatePlayerPos(P.getX(), P.getY()); // update player position every frame
 
-					SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-					SDL_RenderClear(renderer); // clear window with black
+					
 
 					float o = 0;
 					float hor = 0;
@@ -88,7 +89,8 @@ int main(int argc, char *args[])
 					G.drawTwoDim(renderer, &M);				// draw 2D map
 					DC.displayPlayerGunCross(renderer, &P); // display gun, 2D player and crosshair
 					SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-					M.newCol(&P, renderer);
+					P.calcRot(0);
+					C.kbHandle(&P, &M, renderer);	   // keyboard handling
 					SDL_RenderPresent(renderer);
 				}
 			}

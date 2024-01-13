@@ -67,7 +67,3 @@ float player::getHandMoveX() {
 float player::getHandMoveY() {
     return 50 * sin(-abs(wobble) * M_PI) / 2;
 }
-
-
-
-
