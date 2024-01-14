@@ -346,9 +346,9 @@ void map::newCol(player *P, SDL_Renderer *renderer)
             kat -= 90;
         }
 
-        float vecsum = sqrt(pow(P->getMoveVectorX(), 2) + pow(P->getMoveVectorY(), 2));
-        float outputX = vecsum * cos(kat);
-        float outputY = vecsum * sin(kat);
+        // float vecsum = sqrt(pow(P->getMoveVectorX(), 2) + pow(P->getMoveVectorY(), 2));
+        float outputX = 0.6 * cos(kat * M_PI / 180);
+        float outputY = 0.6 * sin(kat * M_PI / 180); // powinno byc vecsum zamiast 0.6
 
         if (outputX < 0.074)
         {
@@ -357,14 +357,15 @@ void map::newCol(player *P, SDL_Renderer *renderer)
 
         if (outputY < 0.074)
         {
-            outputX = 0;
+            outputY = 0;
         }
-        std::cout << sin(kat) << " " << cos(kat) << " " << outputX << " " << outputY << " " << kat << std::endl;
+        std::cout << outputX << " " << outputY << " " << kat << std::endl;
+        SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
 
         // something is messed up with values her
-        SDL_RenderDrawLine(renderer, nextX, nextY, nextX + 100 * outputX, nextY - 100 * outputY);
+        SDL_RenderDrawLine(renderer, nextX, nextY, nextX + 100 * outputX * (abs(P->getMoveVectorX()) / 1), nextY - 100 * outputY * (abs(P->getMoveVectorY()) / 1));
 
-        P->move(outputX, outputY);
+        P->move(outputX * (abs(P->getMoveVectorX()) / 1), outputY * (abs(P->getMoveVectorY()) / 1));
     }
     else
     {
