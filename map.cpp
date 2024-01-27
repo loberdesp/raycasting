@@ -357,7 +357,7 @@ void map::newCol(player *P, SDL_Renderer *renderer)
                 kat += 90;
             }
             else
-            {
+            { 
                 kat -= 90;
             }
 
