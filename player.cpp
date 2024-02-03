@@ -47,8 +47,6 @@ void player::updateWobble() {
         }
     if(prevX!= x || prevY!= y) {
         handMoveRatio = sqrt(pow(prevX-x,2)+pow(prevY-y,2));
-        handMoveRatio *= 5;
-        handMoveRatio /= 7;
         wobble += 0.015*handMoveRatio;
     } else {
         if((wobble>-1 && wobble < -0.5) || (wobble > 0 && wobble < 0.5)) {
@@ -57,7 +55,7 @@ void player::updateWobble() {
         if((wobble > -0.5 && wobble < 0) || (wobble > 0.5 && wobble < 1)) {
             wobble -=0.015;
         }
-    }   
+    }
 }
 
 float player::getHandMoveX() {

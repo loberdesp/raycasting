@@ -14,7 +14,7 @@ void dispcontrol::loadtextures(SDL_Renderer *render, SDL_Window *window)
     i = 0;
     // player txt
     images[i] = IMG_LoadTexture(render, "../assets/img/player.png");
-    SDL_QueryTexture(images[0], NULL, NULL, &w, &h);
+    SDL_QueryTexture(images[i], NULL, NULL, &w, &h);
     rects[i].x = WINY / 2 - PSIZE / 2;
     rects[i].y = WINY / 2 - PSIZE / 2;
     rects[i].w = PSIZE;
@@ -60,6 +60,14 @@ void dispcontrol::loadtextures(SDL_Renderer *render, SDL_Window *window)
     rects[i].h = h;
     i++;
 
+    images[i] = IMG_LoadTexture(render, "../assets/img/bot.png");
+    SDL_QueryTexture(images[i], NULL, NULL, &w, &h);
+    rects[i].x = WINY / 2 - PSIZE / 2;
+    rects[i].y = WINY / 2 - PSIZE / 2;
+    rects[i].w = PSIZE;
+    rects[i].h = PSIZE;
+    i++;
+
 }
 
 SDL_Texture *dispcontrol::getImg(int i)
@@ -76,6 +84,12 @@ void dispcontrol::updatePlayerPos(int x, int y)
 {
     rects[0].x = x - PSIZE / 2;
     rects[0].y = y - PSIZE / 2;
+}
+
+void dispcontrol::updateBotPos(int x, int y)
+{
+    rects[5].x = x - PSIZE / 2;
+    rects[5].y = y - PSIZE / 2;
 }
 
 
@@ -159,12 +173,15 @@ void dispcontrol::fog(float d, bool hor, int txtVal)
     }
 }
 
-void dispcontrol::displayPlayerGunCross(SDL_Renderer *render, player *P)
+void dispcontrol::displayPlayerGunCross(SDL_Renderer *render, player *P, bot *B)
 {
-    // player display
+    // entities display
     SDL_RenderCopyEx(render, images[0], NULL, &rects[0], -P->getAngle(), NULL, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(render, images[5], NULL, &rects[5], -B->getAngle() + 90, NULL, SDL_FLIP_NONE);
+    
 
     // gun display
+
     SDL_RenderCopyEx(render, images[1], NULL, setGunPos(P->getHandMoveX(), P->getHandMoveY()), 0, NULL, SDL_FLIP_NONE);
 
     // crosshair display

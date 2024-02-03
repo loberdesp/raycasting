@@ -19,9 +19,10 @@
 #define FPS 165
 #define PLAYERSPEEDPERSEC 100
 #define COLISIONRANGE 1
-#define PLAYERHITBOXRADIUS PSIZE
+#define RADIUS PSIZE/2
 
 #include "entity.h"
+#include "bot.h"
 #include "player.h"
 #include "map.h"
 #include "soundcontrol.h"

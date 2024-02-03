@@ -47,7 +47,7 @@ SDL_Event *controls::getEvent()
 	return &e;
 }
 
-void controls::kbHandle(player *P, map *M, SDL_Renderer *renderer)
+void controls::kbHandle(player *P, bot *B, map *M, SDL_Renderer *renderer)
 {
 	bool move = false;
 	if (keyboardState[SDL_SCANCODE_LEFT])
@@ -89,7 +89,7 @@ void controls::kbHandle(player *P, map *M, SDL_Renderer *renderer)
 		// bool X, Y;
 		// M->checkCol(P->getX(), P->getY(), P->getVecX(), P->getVecY(), X, Y);
 		// P->colMove(X, Y);
-		M->newCol(P, renderer);
+		M->newCol(P, renderer, P->getAngle() + 90);
 	}
 	if (keyboardState[SDL_SCANCODE_S])
 	{
@@ -99,10 +99,7 @@ void controls::kbHandle(player *P, map *M, SDL_Renderer *renderer)
 			P->calcRot(180);
 		}
 		P->updateMoveVectors();
-		bool X, Y;
-		M->checkCol(P->getX(), P->getY(), -P->getVecX(), -P->getVecY(), X, Y);
-		
-		P->colMove(X, Y);
+		M->newCol(P, renderer, P->getAngle() - 90);
 	}
 	if (keyboardState[SDL_SCANCODE_A])
 	{
@@ -120,6 +117,30 @@ void controls::kbHandle(player *P, map *M, SDL_Renderer *renderer)
 		M->checkCol(P->getX(), P->getY(), P->getVecX(), P->getVecY(), X, Y);
 		P->colMove(X, Y);
 	}
+
+
+
+
+	//bot movement with numpad
+
+
+	if (keyboardState[SDL_SCANCODE_KP_8])
+	{
+		B->move(0, 1);
+	}
+	if (keyboardState[SDL_SCANCODE_KP_5])
+	{
+		B->move(0, -1);
+	}
+	if (keyboardState[SDL_SCANCODE_KP_4])
+	{
+		B->move(-1, 0);
+	}
+	if (keyboardState[SDL_SCANCODE_KP_6])
+	{
+		B->move(1, 0);
+	}
+
 }
 
 void controls::mouseHandle(player *P, map *M)

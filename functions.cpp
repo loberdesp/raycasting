@@ -1,6 +1,7 @@
 #include "headers.h"
 
 #include "entity.cpp"
+#include "bot.cpp"
 #include "player.cpp"
 #include "map.cpp"
 #include "soundcontrol.cpp"

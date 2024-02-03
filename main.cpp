@@ -4,6 +4,7 @@ int main(int argc, char *args[])
 {
 
 	player P;
+	bot B;
 	controls C;
 	map M;
 	dispcontrol DC;
@@ -53,12 +54,13 @@ int main(int argc, char *args[])
 
 					P.checkAngle(); // keep angle in <-180;180>
 					// SC.playsound(0);
-					P.updatePrevPos();	   // save previous position to check if player moved in last frame
 					
 					P.updateWobble();	   // calculation and update for gun wobble
+					P.updatePrevPos();	   // save previous position to check if player moved in last frame
 					C.mouseHandle(&P, &M); // mouse handling
 
-					DC.updatePlayerPos(P.getX(), P.getY()); // update player position every frame
+					DC.updatePlayerPos(P.getX(), P.getY()); // update player position every frame for 2d view
+					DC.updateBotPos(B.getX(), B.getY()); // update bot position every frame for 2d view
 
 					
 
@@ -87,10 +89,10 @@ int main(int argc, char *args[])
 					}
 
 					G.drawTwoDim(renderer, &M);				// draw 2D map
-					DC.displayPlayerGunCross(renderer, &P); // display gun, 2D player and crosshair
+					DC.displayPlayerGunCross(renderer, &P, &B); // display gun, 2D player and crosshair
 					SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
 					P.calcRot(0);
-					C.kbHandle(&P, &M, renderer);	   // keyboard handling
+					C.kbHandle(&P, &B, &M, renderer);	   // keyboard handling
 					SDL_RenderPresent(renderer);
 				}
 			}

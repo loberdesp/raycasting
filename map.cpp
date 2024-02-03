@@ -146,6 +146,7 @@ bool map::getline(float &x, float &y, float vx, float vy, float &horizontal, std
 
     while (1)
     {
+        
 
         if (isinWall(x + vx, y - vy))
         {
@@ -243,154 +244,148 @@ short map::angleDiffFix(int o)
     return posit + WINY;
 }
 
-void map::newCol(player *P, SDL_Renderer *renderer)
+void map::newCol(player *P, SDL_Renderer *renderer, float ang)
 {
-    float nextX = P->getX();
-    float nextY = P->getY();
-    float ang = P->getAngle() + 90;
+    // float nextX = P->getX();
+    // float nextY = P->getY();
 
-    if (ang > 180)
-    {
-        ang -= 360;
-    }
-    if (ang < -180)
-    {
-        ang += 360;
-    }
+    // if (ang > 180)
+    // {
+    //     ang -= 360;
+    // }
+    // if (ang < -180)
+    // {
+    //     ang += 360;
+    // }
 
-    float radius = PLAYERHITBOXRADIUS/2;
-    std::vector<float> angVector;
-    std::vector<float> posVector;
+    // float radius = RADIUS;
+    // std::vector<float> angVector;
+    // std::vector<float> posVector;
 
-    std::vector<int> blockVectorX;
-    std::vector<int> blockVectorY;
-    blockVectorX.push_back(99);
-    blockVectorY.push_back(99);
+    // std::vector<int> blockVectorX;
+    // std::vector<int> blockVectorY;
+    // blockVectorX.push_back(99);
+    // blockVectorY.push_back(99);
 
-    float minDistance = radius;
-    float smallestX;
-    float smallestY;
-    int smallestAng;
+    // float minDistance = radius;
+    // float smallestX;
+    // float smallestY;
+    // int smallestAng;
 
-    for (int i = ang; i > ang - 180; i -= 1)
-    { // find points on border of the player circle using maths hehe
+    // for (int i = ang; i > ang - 180; i -= 1)
+    // { // find points on border of the player circle using maths hehe
 
-        float newang = i;
-        if (newang > 180)
-        {
-            newang -= 360;
-        }
-        if (newang < -180)
-        {
-            newang += 360;
-        }
+    //     float newang = i;
+    //     if (newang > 180)
+    //     {
+    //         newang -= 360;
+    //     }
+    //     if (newang < -180)
+    //     {
+    //         newang += 360;
+    //     }
 
-        float borderX = nextX + radius * cos(newang * M_PI / 180);
-        float borderY = nextY - radius * sin(newang * M_PI / 180);
-        SDL_RenderDrawPoint(renderer, borderX, borderY);
+    //     float borderX = nextX + radius * cos(newang * M_PI / 180);
+    //     float borderY = nextY - radius * sin(newang * M_PI / 180);
+    //     SDL_RenderDrawPoint(renderer, borderX, borderY);
 
-        if (isinWall(borderX, borderY))
-        {
-            angVector.push_back(newang);
-            posVector.push_back(borderX);
-            posVector.push_back(borderY);
-            int blockX = (borderX)*MAPSIZE / WINY;
-            int blockY = (borderY)*MAPSIZE / WINY;
+    //     if (isinWall(borderX, borderY))
+    //     {
+    //         angVector.push_back(newang);
+    //         posVector.push_back(borderX);
+    //         posVector.push_back(borderY);
+    //         int blockX = (borderX)*MAPSIZE / WINY;
+    //         int blockY = (borderY)*MAPSIZE / WINY;
 
-            if (blockVectorX.back() != blockX || blockVectorY.back() != blockY)
-            {
-                blockVectorX.push_back(blockX);
-                blockVectorY.push_back(blockY);
-            }
-        }
-    }
-    if (blockVectorX.size() > 1)
-    {
-        SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
-        for (int i = 0; i < blockVectorX.size() - 1; i++)
-        {
+    //         if (blockVectorX.back() != blockX || blockVectorY.back() != blockY)
+    //         {
+    //             blockVectorX.push_back(blockX);
+    //             blockVectorY.push_back(blockY);
+    //         }
+    //     }
+    // }
+    // if (blockVectorX.size() > 1)
+    // {
+    //     SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
+    //     for (int i = 0; i < blockVectorX.size() - 1; i++)
+    //     {
 
-            float closestX = std::max(blockVectorX[i + 1] * TILESIZE, std::min(int(nextX), int(blockVectorX[i + 1] * TILESIZE + TILESIZE)));
-            float closestY = std::max(blockVectorY[i + 1] * TILESIZE, std::min(int(nextY), int(blockVectorY[i + 1] * TILESIZE + TILESIZE)));
+    //         float closestX = std::max(blockVectorX[i + 1] * TILESIZE, std::min(int(nextX), int(blockVectorX[i + 1] * TILESIZE + TILESIZE)));
+    //         float closestY = std::max(blockVectorY[i + 1] * TILESIZE, std::min(int(nextY), int(blockVectorY[i + 1] * TILESIZE + TILESIZE)));
 
-            float dist = sqrt(pow(nextX - closestX, 2) + pow(nextY - closestY, 2));
+    //         float dist = sqrt(pow(nextX - closestX, 2) + pow(nextY - closestY, 2));
 
-            if (dist < minDistance)
-            {
-                minDistance = dist;
-                smallestX = closestX;
-                smallestY = closestY;
-            }
-        }
+    //         if (dist < minDistance)
+    //         {
+    //             minDistance = dist;
+    //             smallestX = closestX;
+    //             smallestY = closestY;
+    //         }
+    //     }
 
-        float kat = asin((nextY - smallestY) / minDistance) * 180 / M_PI;
+    //     float kat = asin((nextY - smallestY) / minDistance) * 180 / M_PI;
 
-        if(nextY - smallestY < radius) {
+    //     if(nextY - smallestY < radius) {
 
-            SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
-            
-            SDL_RenderDrawLine(renderer, nextX, nextY, smallestX, smallestY);
+    //         SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
 
+    //         SDL_RenderDrawLine(renderer, nextX, nextY, smallestX, smallestY);
 
-            //to jest do naprawienia
-            
+    //         //to jest do naprawienia
 
-            // if (smallestX < nextX)
-            // {
-            //     if (smallestY < nextY)
-            //     {
-            //         kat = 180 - kat;
-            //         std::cout << "teraz" << std::endl;
-            //     }
-            //     else
-            //     {
-            //         kat = -180 - kat;
-            //     }
-                
-            // }
-            
+    //         // if (smallestX < nextX)
+    //         // {
+    //         //     if (smallestY < nextY)
+    //         //     {
+    //         //         kat = 180 - kat;
+    //         //         std::cout << "teraz" << std::endl;
+    //         //     }
+    //         //     else
+    //         //     {
+    //         //         kat = -180 - kat;
+    //         //     }
 
+    //         // }
 
+    //         if (P->getAngle() > kat)
+    //         { // kąt wektora stycznego, ustalamy czy w lewo czy w prawo od kąta gracza
+    //             kat += 90;
+    //         }
+    //         else
+    //         {
+    //             kat -= 90;
+    //         }
 
-            if (P->getAngle() > kat)
-            { // kąt wektora stycznego, ustalamy czy w lewo czy w prawo od kąta gracza
-                kat += 90;
-            }
-            else
-            { 
-                kat -= 90;
-            }
+    //         std::cout << kat << " " << nextY << " - " << smallestY << std::endl;
 
-            std::cout << kat << std::endl;
+    //         float vecsum = sqrt(pow(P->getMoveVectorX(), 2) + pow(P->getMoveVectorY(), 2));
 
-            float vecsum = sqrt(pow(P->getMoveVectorX(), 2) + pow(P->getMoveVectorY(), 2));
+    //         float outputX = vecsum * cos(kat * M_PI / 180);
+    //         float outputY = vecsum * sin(kat * M_PI / 180); // powinno byc vecsum zamiast 0.6
 
-            float outputX = vecsum * cos(kat * M_PI / 180);
-            float outputY = vecsum * sin(kat * M_PI / 180); // powinno byc vecsum zamiast 0.6
+    //         if (abs(outputX) < 0.074)
+    //         {
+    //             outputX = 0;
+    //         }
 
-            if (abs(outputX) < 0.074)
-            {
-                outputX = 0;
-            }
+    //         if (abs(outputY) < 0.074)
+    //         {
+    //             outputY = 0;
+    //         }
+    //         //std::cout << outputX << " " << outputY << " " << kat << std::endl;
 
-            if (abs(outputY) < 0.074)
-            {
-                outputY = 0;
-            }
-            //std::cout << outputX << " " << outputY << " " << kat << std::endl;
-            
-            
+    //         // something is messed up with values here
+    //         SDL_RenderDrawLine(renderer, nextX, nextY, nextX + 100 * outputX * (abs(P->getMoveVectorX()) / 1), nextY - 100 * outputY * (abs(P->getMoveVectorY()) / 1));
 
-            // something is messed up with values here
-            SDL_RenderDrawLine(renderer, nextX, nextY, nextX + 100 * outputX * (abs(P->getMoveVectorX()) / 1), nextY - 100 * outputY * (abs(P->getMoveVectorY()) / 1));
+    //         P->move(outputX * (abs(P->getMoveVectorX()) / 1), outputY * (abs(P->getMoveVectorY()) / 1));
 
-            P->move(outputX * (abs(P->getMoveVectorX()) / 1), outputY * (abs(P->getMoveVectorY()) / 1));
+    //     }
 
-        }
-        
-    }
-    else
-    {
-        P->move(P->getMoveVectorX(), P->getMoveVectorY());
-    }
+    // }
+    // else
+    // {
+    //     P->move(P->getMoveVectorX(), P->getMoveVectorY());
+    // }
+
+    P->move(P->getMoveVectorX(), P->getMoveVectorY());
 }

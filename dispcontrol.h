@@ -12,11 +12,12 @@ public:
     SDL_Texture *getImg(int i);
     SDL_Rect *getRect(int i);
     void updatePlayerPos(int x, int y);
+    void updateBotPos(int x, int y);
     void updateGun(float a);
     void setRect(int i, int x, int ratio);
     SDL_Rect *setGunPos(int x, int y);
     void darkenTexture(int i, int r, int g, int b);
     void wallImgCalc(int ratio, int txtVal, std::vector<std::vector<float>> &vec);
     void fog(float d, bool hor, int txtVal);
-    void displayPlayerGunCross(SDL_Renderer *render, player *P);
+    void displayPlayerGunCross(SDL_Renderer *render, player *P, bot *B);
 };
