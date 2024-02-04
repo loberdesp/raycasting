@@ -113,8 +113,8 @@ int main(int argc, char *args[])
 						playerToBotAngle -= Rfov;
 						SDL_Texture *txt = DC.getImg(6);
 						SDL_Rect *rect = DC.getRect(6);
-						rect->h = (MAPSIZE * WINY) / playerToBotDist/2;
-						rect->w = (MAPSIZE * WINY) / playerToBotDist/2;
+						rect->h = (MAPSIZE * WINY) / playerToBotDist;
+						rect->w = (MAPSIZE * WINY) / playerToBotDist;
 						rect->x = M.angleDiffFix((1 - playerToBotAngle / Lfov) * WINY) - rect->w/2;
 						rect->y = WINY/2 - rect->h/2 + P.getPitch();
 						SDL_RenderCopyEx(renderer, txt, NULL, rect, 0, NULL, SDL_FLIP_NONE);
