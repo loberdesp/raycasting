@@ -68,6 +68,14 @@ void dispcontrol::loadtextures(SDL_Renderer *render, SDL_Window *window)
     rects[i].h = PSIZE;
     i++;
 
+    images[i] = IMG_LoadTexture(render, "../assets/img/botskin.png");
+    SDL_QueryTexture(images[i], NULL, NULL, &w, &h);
+    rects[i].x = 0;
+    rects[i].y = WINY/2 - h/2;
+    rects[i].w = w;
+    rects[i].h = h;
+    i++;
+
 }
 
 SDL_Texture *dispcontrol::getImg(int i)

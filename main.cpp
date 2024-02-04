@@ -54,15 +54,13 @@ int main(int argc, char *args[])
 
 					P.checkAngle(); // keep angle in <-180;180>
 					// SC.playsound(0);
-					
+
 					P.updateWobble();	   // calculation and update for gun wobble
 					P.updatePrevPos();	   // save previous position to check if player moved in last frame
 					C.mouseHandle(&P, &M); // mouse handling
 
 					DC.updatePlayerPos(P.getX(), P.getY()); // update player position every frame for 2d view
-					DC.updateBotPos(B.getX(), B.getY()); // update bot position every frame for 2d view
-
-					
+					DC.updateBotPos(B.getX(), B.getY());	// update bot position every frame for 2d view
 
 					float o = 0;
 					float hor = 0;
@@ -88,11 +86,45 @@ int main(int argc, char *args[])
 						o++;
 					}
 
-					G.drawTwoDim(renderer, &M);				// draw 2D map
+					float playerToBotAngle = atan2((P.getY() - B.getY()), (B.getX() - P.getX())) * 180 / M_PI;
+					float playerToBotDist = sqrt(pow(P.getY() - B.getY(),2) + pow(B.getX() - P.getX(),2));
+					
+
+					float Lfov = P.floatAngle() + MAPSIZE / 2;
+					float Rfov = P.floatAngle() - MAPSIZE / 2;
+
+					// fov is little streched and bot will be displayed when players fov is approaching it so it doesn't just pop at the side of the screen
+
+					if (playerToBotAngle > 90 && Rfov < -180)
+					{
+						Lfov += 360;
+						Rfov += 360;
+					}
+
+					if (playerToBotAngle < -90 && Lfov > 180)
+					{
+						Lfov -= 360;
+						Rfov -= 360;
+					}
+					
+					if (playerToBotAngle > Rfov && playerToBotAngle < Lfov)
+					{
+						Lfov -= Rfov;
+						playerToBotAngle -= Rfov;
+						SDL_Texture *txt = DC.getImg(6);
+						SDL_Rect *rect = DC.getRect(6);
+						rect->h = (MAPSIZE * WINY) / playerToBotDist/2;
+						rect->w = (MAPSIZE * WINY) / playerToBotDist/2;
+						rect->x = M.angleDiffFix((1 - playerToBotAngle / Lfov) * WINY) - rect->w/2;
+						rect->y = WINY/2 - rect->h/2 + P.getPitch();
+						SDL_RenderCopyEx(renderer, txt, NULL, rect, 0, NULL, SDL_FLIP_NONE);
+					}
+
+					G.drawTwoDim(renderer, &M);					// draw 2D map
 					DC.displayPlayerGunCross(renderer, &P, &B); // display gun, 2D player and crosshair
 					SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
 					P.calcRot(0);
-					C.kbHandle(&P, &B, &M, renderer);	   // keyboard handling
+					C.kbHandle(&P, &B, &M, renderer); // keyboard handling
 					SDL_RenderPresent(renderer);
 				}
 			}

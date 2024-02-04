@@ -21,6 +21,7 @@ class entity {
         float getZ();
 
         int getAngle();
+        float floatAngle();
         void addAngle(float i);
         void checkAngle();
         void calcRot(float i);

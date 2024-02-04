@@ -1,5 +1,6 @@
-game::game() {
-    fps = 0;
+game::game()
+{
+	fps = 0;
 }
 
 void game::update(SDL_Renderer *renderer, player *P, map *M, dispcontrol *DC, int i, int o, std::vector<std::vector<float>> &vec)
@@ -83,20 +84,23 @@ void game::drawTwoDim(SDL_Renderer *renderer, map *M)
 	}
 }
 
-bool game::fpsCalc(player *P) {
-    fpsA = std::chrono::steady_clock::now();
-    fpsDelta = fpsA - fpsB;
+bool game::fpsCalc(player *P)
+{
+	fpsA = std::chrono::steady_clock::now();
+	fpsDelta = fpsA - fpsB;
 
-    if (fpsDelta >= std::chrono::duration<double>(1.0 / FPS)) {
+	if (fpsDelta >= std::chrono::duration<double>(1.0 / FPS))
+	{
 
 		// FPS count
 		// 1 / fpsDelta.count()
 
 		P->setElapsed(fpsDelta.count());
-        fpsB = fpsA;
-        return true;
-    }
-    else {
-        return false;
-    }
+		fpsB = fpsA;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

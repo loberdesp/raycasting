@@ -41,6 +41,10 @@ int entity::getAngle()
     return angle;
 }
 
+float entity::floatAngle() {
+    return angle;
+}
+
 void entity::checkAngle()
 {
     if (angle > 180)

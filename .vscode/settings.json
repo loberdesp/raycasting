@@ -70,6 +70,15 @@
 		"xlocbuf": "cpp",
 		"xlocmes": "cpp",
 		"xlocmon": "cpp",
-		"xlocnum": "cpp"
+		"xlocnum": "cpp",
+		"iomanip": "cpp",
+		"optional": "cpp",
+		"sstream": "cpp",
+		"xloctime": "cpp",
+		"condition_variable": "cpp",
+		"map": "cpp",
+		"set": "cpp",
+		"unordered_set": "cpp",
+		"cfenv": "cpp"
 	}
 }
