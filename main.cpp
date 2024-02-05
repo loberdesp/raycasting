@@ -62,33 +62,8 @@ int main(int argc, char *args[])
 					DC.updatePlayerPos(P.getX(), P.getY()); // update player position every frame for 2d view
 					DC.updateBotPos(B.getX(), B.getY());	// update bot position every frame for 2d view
 
-					float o = 0;
-					float hor = 0;
-
-					for (int i = MAPSIZE * 4; i >= -MAPSIZE * 4; i--)
-					{ // fov loop
-
-						float a = P.getX();
-						float b = P.getY();
-
-						P.calcRot(float(i) / 8);
-						std::vector<std::vector<float>> hitVec; // vector of all wall hits on specific ray path
-						std::vector<float> bs(7, 99);
-						hitVec.push_back(bs);
-
-						M.getline(a, b, P.getVecX(), P.getVecY(), hor, hitVec); // calculate all hits
-
-						while (hitVec.size() > 1)
-						{
-							G.update(renderer, &P, &M, &DC, i, o, hitVec); // calculate and display walls for every wall hit
-							hitVec.pop_back();
-						}
-						o++;
-					}
-
 					float playerToBotAngle = atan2((P.getY() - B.getY()), (B.getX() - P.getX())) * 180 / M_PI;
-					float playerToBotDist = sqrt(pow(P.getY() - B.getY(),2) + pow(B.getX() - P.getX(),2));
-					
+					float playerToBotDist = sqrt(pow(P.getY() - B.getY(), 2) + pow(B.getX() - P.getX(), 2));
 
 					float Lfov = P.floatAngle() + MAPSIZE / 2;
 					float Rfov = P.floatAngle() - MAPSIZE / 2;
@@ -106,19 +81,46 @@ int main(int argc, char *args[])
 						Lfov -= 360;
 						Rfov -= 360;
 					}
+
+					float o = 0;
 					
+					float hor = 0;
+
+					for (int i = MAPSIZE * 4; i >= -MAPSIZE * 4; i--)
+					{ // fov loop
+
+						float a = P.getX();
+						float b = P.getY();
+
+						P.calcRot(float(i) / 8);
+						std::vector<std::vector<float>> hitVec; // vector of all wall hits on specific ray path
+						std::vector<float> bs(7, 99);
+						hitVec.push_back(bs);
+
+						M.getline(a, b, P.getVecX(), P.getVecY(), hor, hitVec); // calculate all hits
+
+						while (hitVec.size() > 1)
+						{
+							G.update(renderer, &P, &M, &DC, i, o, hitVec, playerToBotDist); // calculate and display walls for every wall hit
+							hitVec.pop_back();
+						}
+						o++;
+					}
+
 					if (playerToBotAngle > Rfov && playerToBotAngle < Lfov)
 					{
 						Lfov -= Rfov;
 						playerToBotAngle -= Rfov;
 						SDL_Texture *txt = DC.getImg(6);
-						SDL_Rect *rect = DC.getRect(6);
-						rect->h = (MAPSIZE * WINY) / playerToBotDist;
-						rect->w = (MAPSIZE * WINY) / playerToBotDist;
-						rect->x = M.angleDiffFix((1 - playerToBotAngle / Lfov) * WINY) - rect->w/2;
-						rect->y = WINY/2 - rect->h/2 + P.getPitch();
-						SDL_RenderCopyEx(renderer, txt, NULL, rect, 0, NULL, SDL_FLIP_NONE);
+						SDL_Rect rect = DC.getRect(6);
+						rect.h = (MAPSIZE * WINY) / playerToBotDist;
+						rect.w = (MAPSIZE * WINY) / playerToBotDist;
+						rect.x = M.angleDiffFix((1 - playerToBotAngle / Lfov) * WINY) - rect.w / 2;
+						rect.y = WINY / 2 - rect.h / 2 + P.getPitch();
+						SDL_RenderCopyEx(renderer, txt, NULL, &rect, 0, NULL, SDL_FLIP_NONE);
 					}
+
+					DC.displayFurtherObjects(renderer);
 
 					G.drawTwoDim(renderer, &M);					// draw 2D map
 					DC.displayPlayerGunCross(renderer, &P, &B); // display gun, 2D player and crosshair

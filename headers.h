@@ -21,6 +21,7 @@
 #define COLISIONRANGE 1
 #define RADIUS PSIZE/2
 
+#include "dispobject.h"
 #include "entity.h"
 #include "bot.h"
 #include "player.h"

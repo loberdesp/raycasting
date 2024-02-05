@@ -1,5 +1,6 @@
 #include "headers.h"
 
+#include "dispobject.cpp"
 #include "entity.cpp"
 #include "bot.cpp"
 #include "player.cpp"

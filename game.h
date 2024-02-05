@@ -8,7 +8,7 @@ class game {
 
     public:
         game();
-        void update(SDL_Renderer* renderer, player* P, map* M, dispcontrol* DC, int i, int o, std::vector<std::vector<float>> &vec);
+        void update(SDL_Renderer* renderer, player* P, map* M, dispcontrol* DC, int i, int o, std::vector<std::vector<float>> &vec, float playertobot);
         void drawFloor(SDL_Renderer* renderer, player* P, float wallH, int o);
         void drawCeiling(SDL_Renderer* renderer, player* P, float wallH, int o);
         void drawTwoDim(SDL_Renderer* renderer, map* M);

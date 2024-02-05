@@ -5,12 +5,13 @@ class dispcontrol
     SDL_Rect rects[10];
     SDL_Rect gunPos;
     SDL_Surface *icon;
+    std::vector<dispobject> dispObjects;
 
 public:
     dispcontrol();
     void loadtextures(SDL_Renderer *render, SDL_Window *window);
     SDL_Texture *getImg(int i);
-    SDL_Rect *getRect(int i);
+    SDL_Rect getRect(int i);
     void updatePlayerPos(int x, int y);
     void updateBotPos(int x, int y);
     void updateGun(float a);
@@ -20,4 +21,6 @@ public:
     void wallImgCalc(int ratio, int txtVal, std::vector<std::vector<float>> &vec);
     void fog(float d, bool hor, int txtVal);
     void displayPlayerGunCross(SDL_Renderer *render, player *P, bot *B);
+    void pushDispObj(dispobject ob);
+    void displayFurtherObjects(SDL_Renderer* render);
 };

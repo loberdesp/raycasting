@@ -3,7 +3,7 @@ game::game()
 	fps = 0;
 }
 
-void game::update(SDL_Renderer *renderer, player *P, map *M, dispcontrol *DC, int i, int o, std::vector<std::vector<float>> &vec)
+void game::update(SDL_Renderer *renderer, player *P, map *M, dispcontrol *DC, int i, int o, std::vector<std::vector<float>> &vec, float playertobot)
 {
 	SDL_SetRenderDrawColor(renderer, 255, 255, 0, 0);
 	SDL_RenderDrawLine(renderer, P->getX(), P->getY(), vec.back()[0], vec.back()[1]);
@@ -24,9 +24,18 @@ void game::update(SDL_Renderer *renderer, player *P, map *M, dispcontrol *DC, in
 	}
 
 	DC->wallImgCalc(ratio, txtVal, vec);
-	DC->fog(dist, vec.back()[2], txtVal);
+	// DC->fog(dist, vec.back()[2], txtVal);
 
-	SDL_RenderCopyEx(renderer, DC->getImg(txtVal), DC->getRect(txtVal), &tmpRect, 0, NULL, SDL_FLIP_NONE);
+	dispobject obj(dist, DC->getImg(txtVal), DC->getRect(txtVal), tmpRect);
+
+	if (dist > playertobot)
+	{
+		SDL_RenderCopyEx(renderer, obj.getTexture(), obj.getSrcRect(), obj.getDstRect(), 0, NULL, SDL_FLIP_NONE);
+	}
+	else
+	{
+		DC->pushDispObj(obj);
+	}
 }
 
 void game::drawFloor(SDL_Renderer *renderer, player *P, float wallH, int o)

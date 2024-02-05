@@ -5,7 +5,7 @@ dispcontrol::dispcontrol()
 
 void dispcontrol::loadtextures(SDL_Renderer *render, SDL_Window *window)
 {
-    //load window icon
+    // load window icon
     icon = SDL_LoadBMP("../assets/img/icon.bmp");
     SDL_SetWindowIcon(window, icon);
     SDL_FreeSurface(icon);
@@ -71,11 +71,10 @@ void dispcontrol::loadtextures(SDL_Renderer *render, SDL_Window *window)
     images[i] = IMG_LoadTexture(render, "../assets/img/botskin.png");
     SDL_QueryTexture(images[i], NULL, NULL, &w, &h);
     rects[i].x = 0;
-    rects[i].y = WINY/2 - h/2;
+    rects[i].y = WINY / 2 - h / 2;
     rects[i].w = w;
     rects[i].h = h;
     i++;
-
 }
 
 SDL_Texture *dispcontrol::getImg(int i)
@@ -83,9 +82,9 @@ SDL_Texture *dispcontrol::getImg(int i)
     return images[i];
 }
 
-SDL_Rect *dispcontrol::getRect(int i)
+SDL_Rect dispcontrol::getRect(int i)
 {
-    return &rects[i];
+    return rects[i];
 }
 
 void dispcontrol::updatePlayerPos(int x, int y)
@@ -99,7 +98,6 @@ void dispcontrol::updateBotPos(int x, int y)
     rects[5].x = x - PSIZE / 2;
     rects[5].y = y - PSIZE / 2;
 }
-
 
 void dispcontrol::setRect(int i, int x, int ratio)
 {
@@ -186,7 +184,6 @@ void dispcontrol::displayPlayerGunCross(SDL_Renderer *render, player *P, bot *B)
     // entities display
     SDL_RenderCopyEx(render, images[0], NULL, &rects[0], -P->getAngle(), NULL, SDL_FLIP_NONE);
     SDL_RenderCopyEx(render, images[5], NULL, &rects[5], -B->getAngle() + 90, NULL, SDL_FLIP_NONE);
-    
 
     // gun display
 
@@ -196,4 +193,22 @@ void dispcontrol::displayPlayerGunCross(SDL_Renderer *render, player *P, bot *B)
     SDL_SetRenderDrawColor(render, 0, 255, 255, 255);
     SDL_RenderDrawLine(render, 3 * WINY / 2 - 5, WINY / 2 - 5, 3 * WINY / 2 + 5, WINY / 2 + 5);
     SDL_RenderDrawLine(render, 3 * WINY / 2 - 5, WINY / 2 + 5, 3 * WINY / 2 + 5, WINY / 2 - 5);
+}
+
+void dispcontrol::pushDispObj(dispobject ob)
+{
+    dispObjects.push_back(ob);
+}
+
+void dispcontrol::displayFurtherObjects(SDL_Renderer *render)
+{
+    for (auto x : dispObjects)
+    {
+        SDL_RenderCopyEx(render, x.getTexture(), x.getSrcRect(), x.getDstRect(), 0, NULL, SDL_FLIP_NONE);
+    }
+    //std::cout << dispObjects.size() << std::endl;
+    if(dispObjects.size()!=0) {
+        dispObjects[0].check();
+    }
+    dispObjects.clear();
 }
