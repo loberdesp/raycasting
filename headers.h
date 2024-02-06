@@ -25,6 +25,7 @@
 #include "entity.h"
 #include "bot.h"
 #include "player.h"
+#include "pathfindcell.h"
 #include "map.h"
 #include "soundcontrol.h"
 #include "controls.h"

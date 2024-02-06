@@ -76,6 +76,21 @@ void map::initMap()
     mapVector[63] = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
 }
 
+void map::initPath() {
+    for(int i=0; i<mapVector.size();i++) {
+        for(int j=0; j<mapVector[i].size();j++) {
+            if(mapVector[i][j]!=0) {
+                pathVector[i][j].wall = 1;
+            }
+        }
+    }
+}
+
+void map::updatePath() {
+    
+}
+
+
 void map::addWall(int x1, int y1)
 {
     if (mapVector[y1][x1] == 0)

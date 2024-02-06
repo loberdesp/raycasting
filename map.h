@@ -1,11 +1,14 @@
 class map
 {
-    std::vector<std::vector<int>> mapVector = std::vector<std::vector<int>>(MAPSIZE, std::vector<int>(MAPSIZE, 0));
+    std::vector<std::vector<int>> mapVector = std::vector<std::vector<int>>(MAPSIZE, std::vector<int>(MAPSIZE));
     std::vector<SDL_Rect> wallVec;
+    std::vector<std::vector<pathCell>> pathVector = std::vector<std::vector<pathCell>>(MAPSIZE, std::vector<pathCell>(MAPSIZE));
 
 public:
     map();
     void initMap();
+    void initPath();
+    void updatePath();
     void addWall(int x1, int y1);
     int getWallcount();
     SDL_Rect *getRect(int i);

@@ -29,6 +29,7 @@ int main(int argc, char *args[])
 		SDL_SetRelativeMouseMode(SDL_TRUE); // Enable relative mouse mode
 
 		M.initMap();					   // load array map
+		M.initPath();					   // load map for pathfinding algorithm
 		DC.loadtextures(renderer, window); // load textures
 		// SC.loadsounds();
 
