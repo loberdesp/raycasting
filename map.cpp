@@ -76,6 +76,21 @@ void map::initMap()
     mapVector[63] = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
 }
 
+bool isValid(int row, int col)
+{
+    // Returns true if row number and column number
+    // is in range
+    return (row >= 0) && (row < MAPSIZE) && (col >= 0)
+           && (col < MAPSIZE);
+}
+
+float calculateHValue(int row, int col, int destX, int destY)
+{
+    // Return using the distance formula
+    //return ((double)sqrt((row - dest.first) * (row - dest.first) + (col - dest.second) * (col - dest.second)));
+    return 0;
+}
+
 void map::initPath() {
     for(int i=0; i<mapVector.size();i++) {
         for(int j=0; j<mapVector[i].size();j++) {

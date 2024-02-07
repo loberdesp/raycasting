@@ -9,6 +9,8 @@ public:
     void initMap();
     void initPath();
     void updatePath();
+    bool isValid(int row, int col);
+    float calculateHValue(int row, int col, int destX, int destY);
     void addWall(int x1, int y1);
     int getWallcount();
     SDL_Rect *getRect(int i);
