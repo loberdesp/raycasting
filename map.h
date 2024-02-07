@@ -2,14 +2,15 @@ class map
 {
     std::vector<std::vector<int>> mapVector = std::vector<std::vector<int>>(MAPSIZE, std::vector<int>(MAPSIZE));
     std::vector<SDL_Rect> wallVec;
-    std::vector<std::vector<pathCell>> pathVector = std::vector<std::vector<pathCell>>(MAPSIZE, std::vector<pathCell>(MAPSIZE));
+    std::vector<std::vector<pathCell>> pathMap = std::vector<std::vector<pathCell>>(MAPSIZE, std::vector<pathCell>(MAPSIZE));
 
 public:
     map();
     void initMap();
     void initPath();
-    void updatePath();
+    bool isDestination(int y, int x, int dy, int dx);
     bool isValid(int row, int col);
+    void updatePath(int sX, int sY, int dX, int dY);
     float calculateHValue(int row, int col, int destX, int destY);
     void addWall(int x1, int y1);
     int getWallcount();

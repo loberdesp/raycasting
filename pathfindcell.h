@@ -7,6 +7,7 @@ class pathCell {
         bool wall;
         int parentX;
         int parentY;
+        bool isIncluded;
 
         pathCell();
 };

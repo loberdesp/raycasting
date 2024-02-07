@@ -1,8 +1,9 @@
 pathCell::pathCell() {
-    f = 0;
-    g = 0;
-    h = 0;
-    parentX = 0;
-    parentY = 0;
+    f = FLT_MAX;
+    g = FLT_MAX;
+    h = FLT_MAX;
+    parentX = -1;
+    parentY = -1;
     wall = false;
+    isIncluded = false;
 }
