@@ -2,16 +2,14 @@ class map
 {
     std::vector<std::vector<int>> mapVector = std::vector<std::vector<int>>(MAPSIZE, std::vector<int>(MAPSIZE));
     std::vector<SDL_Rect> wallVec;
-    std::vector<std::vector<pathCell>> pathMap = std::vector<std::vector<pathCell>>(MAPSIZE, std::vector<pathCell>(MAPSIZE));
+    pathFinder pf;
+    int grid[ROW][COL];
 
 public:
     map();
     void initMap();
     void initPath();
-    bool isDestination(int y, int x, int dy, int dx);
-    bool isValid(int row, int col);
-    void updatePath(int sX, int sY, int dX, int dY);
-    float calculateHValue(int row, int col, int destX, int destY);
+    void findPath(int srcY, int srcX, int destY, int destX);
     void addWall(int x1, int y1);
     int getWallcount();
     SDL_Rect *getRect(int i);
@@ -21,6 +19,5 @@ public:
     int checkBlock(int x, int y);
     SDL_Rect rayWall(float pitch, int k, int ratio, std::vector<std::vector<float>> &vec);
     short angleDiffFix(int o);
-
     void newCol(player *P, SDL_Renderer *renderer, float angle);
 };

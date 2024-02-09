@@ -3,7 +3,7 @@ controls::controls()
 	std::cout << "Created Controls!" << std::endl;
 }
 
-bool controls::eventSwitch()
+bool controls::eventSwitch(map *M, player *P, bot *B)
 {
 	switch (e.type)
 	{
@@ -23,7 +23,9 @@ bool controls::eventSwitch()
 		}
 		case SDLK_SPACE:
 		{
-			std::cout << "jump" << std::endl;
+			//std::cout << "jump" << std::endl;
+			M->findPath(B->getY(), B->getX(), P->getY(), P->getX());
+			
 		}
 		}
 	}

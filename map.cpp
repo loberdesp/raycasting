@@ -76,28 +76,6 @@ void map::initMap()
     mapVector[63] = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
 }
 
-bool map::isValid(int row, int col)
-{
-    // Returns true if row number and column number
-    // is in range
-    return (row >= 0) && (row < MAPSIZE) && (col >= 0) && (col < MAPSIZE);
-}
-
-float map::calculateHValue(int row, int col, int destX, int destY)
-{
-    // Return using the distance formula
-    // return ((double)sqrt((row - dest.first) * (row - dest.first) + (col - dest.second) * (col - dest.second)));
-    return 0;
-}
-
-bool map::isDestination(int y, int x, int dy, int dx)
-{
-    if (y == dy && x == dx)
-        return (true);
-    else
-        return (false);
-}
-
 void map::initPath()
 {
     for (int i = 0; i < mapVector.size(); i++)
@@ -106,98 +84,21 @@ void map::initPath()
         {
             if (mapVector[i][j] != 0)
             {
-                pathMap[i][j].wall = 1;
+                grid[i][j] = 0;
+                
+            } else {
+                grid[i][j] = 1;
             }
         }
     }
 }
 
-void map::updatePath(int sX, int sY, int dX, int dY) // source and destination
+void map::findPath(int srcY, int srcX, int destY, int destX)
 {
-    int sXint = sX / float(TILESIZE);
-    int sYint = sY / float(TILESIZE);
-    int dXint = dX / float(TILESIZE);
-    int dYint = dY / float(TILESIZE);
+    Pair src = std::make_pair(srcY/float(TILESIZE), srcX/float(TILESIZE));
+    Pair dest = std::make_pair(destY/float(TILESIZE), destX/float(TILESIZE));
 
-    if (sXint == dXint && sYint == dYint)
-    {
-        printf("We are already at the destination\n");
-        return;
-    }
-
-    std::vector<pathCell> openList;
-
-    int i = sYint;
-    int j = sXint;
-
-    pathMap[i][j].f = 0;
-    pathMap[i][j].g = 0;
-    pathMap[i][j].h = 0;
-    pathMap[i][j].parentY = i;
-    pathMap[i][j].parentX = j;
-
-    // our path array is actually closed list
-    openList.push_back(pathMap[i][j]);
-
-    bool foundDest = false;
-
-    //! CURRENT PLAN IS TO MAKE ALL CLASSES AND STUFF SO I CAN COPY PASTE CODE FROM GEEKSFORGEEKS ABT A* PATHFINDING SO YEAH
-
-    // while (!openList.empty())
-    // {
-    //     pathCell p = *openList.begin();
-
-    //     openList.erase(openList.begin());
-    //     i = p.y;
-    //     j = p.x;
-    //     pathMap[i][j].isIncluded = true;
-    //     float gNew, fNew, hNew;
-
-    //     // Only process this cell if this is a valid one
-    //     if (isValid(i - 1, j) == true)
-    //     {
-    //         if (isDestination(i - 1, j, dYint, dXint) == true)
-    //         {
-    //             // Set the Parent of the destination cell
-    //             pathMap[i - 1][j].parentY = i;
-    //             pathMap[i - 1][j].parentX = j;
-    //             printf("The destination cell is found\n");
-    //             tracePath(cellDetails, dest);
-    //             foundDest = true;
-    //             return;
-    //         }
-    //         // If the successor is already on the closed
-    //         // list or if it is blocked, then ignore it.
-    //         // Else do the following
-    //         else if (closedList[i - 1][j] == false && isUnBlocked(grid, i - 1, j) == true)
-    //         {
-    //             gNew = cellDetails[i][j].g + 1.0;
-    //             hNew = calculateHValue(i - 1, j, dest);
-    //             fNew = gNew + hNew;
-
-    //             // If it isn’t on the open list, add it to
-    //             // the open list. Make the current square
-    //             // the parent of this square. Record the
-    //             // f, g, and h costs of the square cell
-    //             //                OR
-    //             // If it is on the open list already, check
-    //             // to see if this path to that square is
-    //             // better, using 'f' cost as the measure.
-    //             if (cellDetails[i - 1][j].f == FLT_MAX || cellDetails[i - 1][j].f > fNew)
-    //             {
-    //                 openList.insert(make_pair(
-    //                     fNew, make_pair(i - 1, j)));
-
-    //                 // Update the details of this cell
-    //                 cellDetails[i - 1][j].f = fNew;
-    //                 cellDetails[i - 1][j].g = gNew;
-    //                 cellDetails[i - 1][j].h = hNew;
-    //                 cellDetails[i - 1][j].parent_i = i;
-    //                 cellDetails[i - 1][j].parent_j = j;
-    //             }
-    //         }
-    //     }
-    // }
+    pf.aStarSearch(grid, src, dest);
 }
 
 void map::addWall(int x1, int y1)

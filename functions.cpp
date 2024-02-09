@@ -4,7 +4,7 @@
 #include "entity.cpp"
 #include "bot.cpp"
 #include "player.cpp"
-#include "pathfindcell.cpp"
+#include "pathfind.cpp"
 #include "map.cpp"
 #include "soundcontrol.cpp"
 #include "controls.cpp"

@@ -48,7 +48,7 @@ int main(int argc, char *args[])
 				{ // execute if correct fps
 					while (SDL_PollEvent(C.getEvent()))
 					{ // event handling
-						quit = C.eventSwitch();
+						quit = C.eventSwitch(&M, &P, &B);
 					}
 					SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 					SDL_RenderClear(renderer); // clear window with black

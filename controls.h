@@ -5,7 +5,7 @@ class controls {
 
     public:
         controls();
-        bool eventSwitch();
+        bool eventSwitch(map *M, player *P, bot *B);
         SDL_Event* getEvent();
         void kbHandle(player* P, bot* B, map* M, SDL_Renderer *renderer);
         void mouseHandle(player* P, map* M);
