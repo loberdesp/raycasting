@@ -163,7 +163,7 @@ void pathFinder::aStarSearch(int grid[][COL], Pair src, Pair dest)
                 \  |  /
              W----Cell----E
                   / | \
-                /   |  \ 
+                /   |  \
              S.W    S   S.E
  
          Cell-->Popped Cell (i, j)
