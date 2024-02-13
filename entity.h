@@ -23,6 +23,7 @@ class entity {
         int getAngle();
         float floatAngle();
         void addAngle(float i);
+        void setAngle(float i);
         void checkAngle();
         void calcRot(float i);
 

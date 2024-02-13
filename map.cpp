@@ -93,12 +93,21 @@ void map::initPath()
     }
 }
 
-void map::findPath(int srcY, int srcX, int destY, int destX)
+float map::findPath(int srcY, int srcX, int destY, int destX)
 {
     Pair src = std::make_pair(srcY/float(TILESIZE), srcX/float(TILESIZE));
     Pair dest = std::make_pair(destY/float(TILESIZE), destX/float(TILESIZE));
+    int nextX;
+    int nextY;
 
-    pf.aStarSearch(grid, src, dest);
+    pf.aStarSearch(grid, src, dest, nextY, nextX);
+
+    //! fix smth here
+
+    std::cout << srcY << " " << srcX << " " << TILESIZE*nextY << " " << TILESIZE*nextX << std::endl;
+    float botToPlayerAngle = atan2((srcY - (TILESIZE*(nextY+0.5))), (srcX - (TILESIZE*(nextX+0.5)))) * 180 / M_PI;
+    return botToPlayerAngle;
+    
 }
 
 void map::addWall(int x1, int y1)

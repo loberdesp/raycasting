@@ -44,7 +44,7 @@ int main(int argc, char *args[])
 
 			while (quit == false)
 			{
-				if (G.fpsCalc(&P))
+				if (G.fpsCalc(&P, &B))
 				{ // execute if correct fps
 					while (SDL_PollEvent(C.getEvent()))
 					{ // event handling
@@ -54,6 +54,7 @@ int main(int argc, char *args[])
 					SDL_RenderClear(renderer); // clear window with black
 
 					P.checkAngle(); // keep angle in <-180;180>
+					B.checkAngle();
 					// SC.playsound(0);
 
 					P.updateWobble();	   // calculation and update for gun wobble

@@ -16,17 +16,17 @@ bool controls::eventSwitch(map *M, player *P, bot *B)
 	{
 		switch (e.key.keysym.sym)
 		{
-		case SDLK_ESCAPE:
-		{
-			return true;
-			break;
-		}
-		case SDLK_SPACE:
-		{
-			//std::cout << "jump" << std::endl;
-			M->findPath(B->getY(), B->getX(), P->getY(), P->getX());
-			
-		}
+			case SDLK_ESCAPE:
+			{
+				return true;
+				break;
+			}
+			case SDLK_SPACE:
+			{
+				//std::cout << "jump" << std::endl;
+				B->setAngle(M->findPath(B->getY(), B->getX(), P->getY(), P->getX()) + 90);
+				
+			}
 		}
 	}
 	case SDL_MOUSEBUTTONDOWN:
@@ -87,7 +87,6 @@ void controls::kbHandle(player *P, bot *B, map *M, SDL_Renderer *renderer)
 	if (keyboardState[SDL_SCANCODE_W])
 	{
 		P->updateMoveVectors();
-		
 		// bool X, Y;
 		// M->checkCol(P->getX(), P->getY(), P->getVecX(), P->getVecY(), X, Y);
 		// P->colMove(X, Y);
@@ -128,19 +127,31 @@ void controls::kbHandle(player *P, bot *B, map *M, SDL_Renderer *renderer)
 
 	if (keyboardState[SDL_SCANCODE_KP_8])
 	{
-		B->move(0, 1);
+		//B->move(0, 1);
+		B->updateMoveVectors();
+		B->move(B->getMoveVectorX(), B->getMoveVectorY());
 	}
-	if (keyboardState[SDL_SCANCODE_KP_5])
+	if (keyboardState[SDL_SCANCODE_KP_2])
 	{
-		B->move(0, -1);
+		if(B->getAngle()>=90) {
+			B->calcRot(-180);
+		} else {
+			B->calcRot(180);
+		}
+		B->updateMoveVectors();
+		B->move(B->getMoveVectorX(), B->getMoveVectorY());
 	}
 	if (keyboardState[SDL_SCANCODE_KP_4])
 	{
-		B->move(-1, 0);
+		B->calcRot(90);
+		B->updateMoveVectors();
+		B->move(B->getMoveVectorX(), B->getMoveVectorY());
 	}
 	if (keyboardState[SDL_SCANCODE_KP_6])
 	{
-		B->move(1, 0);
+		B->calcRot(-90);
+		B->updateMoveVectors();
+		B->move(B->getMoveVectorX(), B->getMoveVectorY());
 	}
 
 }

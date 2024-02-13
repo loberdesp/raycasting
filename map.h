@@ -9,7 +9,7 @@ public:
     map();
     void initMap();
     void initPath();
-    void findPath(int srcY, int srcX, int destY, int destX);
+    float findPath(int srcY, int srcX, int destY, int destX);
     void addWall(int x1, int y1);
     int getWallcount();
     SDL_Rect *getRect(int i);

@@ -21,6 +21,11 @@ void entity::addAngle(float i)
     angle += i;
 }
 
+void entity::setAngle(float i)
+{
+    angle = i;
+}
+
 float entity::getX()
 {
     return x;

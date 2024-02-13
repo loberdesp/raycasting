@@ -12,5 +12,5 @@ class game {
         void drawFloor(SDL_Renderer* renderer, player* P, float wallH, int o);
         void drawCeiling(SDL_Renderer* renderer, player* P, float wallH, int o);
         void drawTwoDim(SDL_Renderer* renderer, map* M);
-        bool fpsCalc(player *P);
+        bool fpsCalc(player *P, bot *B);
 };
