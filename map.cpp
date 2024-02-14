@@ -104,7 +104,7 @@ float map::findPath(int srcY, int srcX, int destY, int destX)
 
     //! fix smth here
 
-    std::cout << srcY << " " << srcX << " " << TILESIZE*nextY << " " << TILESIZE*nextX << std::endl;
+    //std::cout << srcY << " " << srcX << " " << TILESIZE*nextY << " " << TILESIZE*nextX << std::endl;
     float botToPlayerAngle = atan2((srcY - (TILESIZE*(nextY+0.5))), (srcX - (TILESIZE*(nextX+0.5)))) * 180 / M_PI;
     return botToPlayerAngle;
     
