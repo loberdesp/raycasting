@@ -53,7 +53,7 @@ void pathFinder::tracePath(cell cellDetails[][COL], Pair dest, int &Y, int &X)
         Y = temp_row;
         X = temp_col;
     }
-    Path.pop();
+
     Y = Path.top().first;
     X = Path.top().second;
 
@@ -195,7 +195,7 @@ void pathFinder::aStarSearch(int grid[][COL], Pair src, Pair dest, int &nY, int 
                 // Set the Parent of the destination cell
                 cellDetails[i - 1][j].parent_i = i;
                 cellDetails[i - 1][j].parent_j = j;
-                printf("The destination cell is found\n");
+                //printf("The destination cell is found\n");
                 tracePath(cellDetails, dest, nY, nX);
                 foundDest = true;
                 return;
@@ -244,7 +244,7 @@ void pathFinder::aStarSearch(int grid[][COL], Pair src, Pair dest, int &nY, int 
                 // Set the Parent of the destination cell
                 cellDetails[i + 1][j].parent_i = i;
                 cellDetails[i + 1][j].parent_j = j;
-                printf("The destination cell is found\n");
+                //printf("The destination cell is found\n");
                 tracePath(cellDetails, dest, nY, nX);
                 foundDest = true;
                 return;
@@ -292,7 +292,7 @@ void pathFinder::aStarSearch(int grid[][COL], Pair src, Pair dest, int &nY, int 
                 // Set the Parent of the destination cell
                 cellDetails[i][j + 1].parent_i = i;
                 cellDetails[i][j + 1].parent_j = j;
-                printf("The destination cell is found\n");
+                //printf("The destination cell is found\n");
                 tracePath(cellDetails, dest, nY, nX);
                 foundDest = true;
                 return;
@@ -342,7 +342,7 @@ void pathFinder::aStarSearch(int grid[][COL], Pair src, Pair dest, int &nY, int 
                 // Set the Parent of the destination cell
                 cellDetails[i][j - 1].parent_i = i;
                 cellDetails[i][j - 1].parent_j = j;
-                printf("The destination cell is found\n");
+                //printf("The destination cell is found\n");
                 tracePath(cellDetails, dest, nY, nX);
                 foundDest = true;
                 return;
@@ -393,7 +393,7 @@ void pathFinder::aStarSearch(int grid[][COL], Pair src, Pair dest, int &nY, int 
                 // Set the Parent of the destination cell
                 cellDetails[i - 1][j + 1].parent_i = i;
                 cellDetails[i - 1][j + 1].parent_j = j;
-                printf("The destination cell is found\n");
+                //printf("The destination cell is found\n");
                 tracePath(cellDetails, dest, nY, nX);
                 foundDest = true;
                 return;
@@ -444,7 +444,7 @@ void pathFinder::aStarSearch(int grid[][COL], Pair src, Pair dest, int &nY, int 
                 // Set the Parent of the destination cell
                 cellDetails[i - 1][j - 1].parent_i = i;
                 cellDetails[i - 1][j - 1].parent_j = j;
-                printf("The destination cell is found\n");
+                //printf("The destination cell is found\n");
                 tracePath(cellDetails, dest, nY, nX);
                 foundDest = true;
                 return;
@@ -494,7 +494,7 @@ void pathFinder::aStarSearch(int grid[][COL], Pair src, Pair dest, int &nY, int 
                 // Set the Parent of the destination cell
                 cellDetails[i + 1][j + 1].parent_i = i;
                 cellDetails[i + 1][j + 1].parent_j = j;
-                printf("The destination cell is found\n");
+                //printf("The destination cell is found\n");
                 tracePath(cellDetails, dest, nY, nX);
                 foundDest = true;
                 return;
@@ -545,7 +545,7 @@ void pathFinder::aStarSearch(int grid[][COL], Pair src, Pair dest, int &nY, int 
                 // Set the Parent of the destination cell
                 cellDetails[i + 1][j - 1].parent_i = i;
                 cellDetails[i + 1][j - 1].parent_j = j;
-                printf("The destination cell is found\n");
+                //printf("The destination cell is found\n");
                 tracePath(cellDetails, dest, nY, nX);
                 foundDest = true;
                 return;

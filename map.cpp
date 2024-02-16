@@ -85,8 +85,9 @@ void map::initPath()
             if (mapVector[i][j] != 0)
             {
                 grid[i][j] = 0;
-                
-            } else {
+            }
+            else
+            {
                 grid[i][j] = 1;
             }
         }
@@ -95,8 +96,8 @@ void map::initPath()
 
 float map::findPath(int srcY, int srcX, int destY, int destX)
 {
-    Pair src = std::make_pair(srcY/float(TILESIZE), srcX/float(TILESIZE));
-    Pair dest = std::make_pair(destY/float(TILESIZE), destX/float(TILESIZE));
+    Pair src = std::make_pair(int(srcY / float(TILESIZE)), int(srcX / float(TILESIZE)));
+    Pair dest = std::make_pair(int(destY / float(TILESIZE)), int(destX / float(TILESIZE)));
     int nextX;
     int nextY;
 
@@ -104,10 +105,26 @@ float map::findPath(int srcY, int srcX, int destY, int destX)
 
     //! fix smth here
 
-    //std::cout << srcY << " " << srcX << " " << TILESIZE*nextY << " " << TILESIZE*nextX << std::endl;
-    float botToPlayerAngle = atan2((srcY - (TILESIZE*(nextY+0.5))), (srcX - (TILESIZE*(nextX+0.5)))) * 180 / M_PI;
-    return botToPlayerAngle;
-    
+    // std::cout << "curr pos: " << srcY << " " << srcX << " next pos: " << (TILESIZE * (nextY + 0.5)) << " " << (TILESIZE * (nextX + 0.5)) << std::endl;
+    // std::cout << srcY - (TILESIZE * (nextY + 0.5)) << " " << (srcX - (TILESIZE * (nextX + 0.5))) << std::endl;
+
+    float yDiff = srcY - (TILESIZE * (nextY + 0.5));
+    float xDiff = srcX - (TILESIZE * (nextX + 0.5));
+
+    if (yDiff == 0)
+    {
+        yDiff = 0.001;
+    }
+    if (xDiff == 0)
+    {
+        xDiff == 0.001;
+    }
+
+    float botToPlayerAngle = atan2(yDiff, xDiff) * 180 / M_PI;
+    float an = -atan2((destY - srcY), (destX - srcX)) * 180 / M_PI;
+    // std::cout << an << std::endl;
+    // std::cout << botToPlayerAngle << std::endl;
+    return an;
 }
 
 void map::addWall(int x1, int y1)

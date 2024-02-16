@@ -57,8 +57,9 @@ int main(int argc, char *args[])
 					B.checkAngle();
 					// SC.playsound(0);
 
-					P.updateWobble();	   // calculation and update for gun wobble
-					P.updatePrevPos();	   // save previous position to check if player moved in last frame
+					P.updateWobble();  // calculation and update for gun wobble
+					P.updatePrevPos(); // save previous position to check if player moved in last frame
+					B.updatePrevPos();
 					C.mouseHandle(&P, &M); // mouse handling
 
 					DC.updatePlayerPos(P.getX(), P.getY()); // update player position every frame for 2d view
@@ -69,6 +70,15 @@ int main(int argc, char *args[])
 
 					float Lfov = P.floatAngle() + MAPSIZE / 2;
 					float Rfov = P.floatAngle() - MAPSIZE / 2;
+
+					if (B.getFollow())
+					{
+						B.setAngle(M.findPath(B.getY(), B.getX(), P.getY(), P.getX()));
+						// std::cout << B.getAngle() << std::endl;
+						B.calcRot(B.getAngle());
+						//std::cout << B.getAngle() << " " << B.getVecX() << " " << B.getVecY() << std::endl;
+						B.move(B.getVecX(), B.getVecY());
+					}
 
 					// fov is little streched and bot will be displayed when players fov is approaching it so it doesn't just pop at the side of the screen
 
@@ -85,7 +95,7 @@ int main(int argc, char *args[])
 					}
 
 					float o = 0;
-					
+
 					float hor = 0;
 
 					for (int i = MAPSIZE * 4; i >= -MAPSIZE * 4; i--)

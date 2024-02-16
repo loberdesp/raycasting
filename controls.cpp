@@ -24,7 +24,8 @@ bool controls::eventSwitch(map *M, player *P, bot *B)
 			case SDLK_SPACE:
 			{
 				//std::cout << "jump" << std::endl;
-				B->setAngle(M->findPath(B->getY(), B->getX(), P->getY(), P->getX()) + 90);
+				B->toggleFollow();
+				//B->setAngle(-M->findPath(B->getY(), B->getX(), P->getY(), P->getX()));
 				
 			}
 		}
