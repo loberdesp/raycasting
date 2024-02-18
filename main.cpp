@@ -83,7 +83,7 @@ int main(int argc, char *args[])
 					// fov is little streched and bot will be displayed when players fov is approaching it so it doesn't just pop at the side of the screen
 
 					if (playerToBotAngle > 90 && Rfov < -180)
-					{
+					{ 
 						Lfov += 360;
 						Rfov += 360;
 					}
